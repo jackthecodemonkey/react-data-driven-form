@@ -1,0 +1,24 @@
+import rules from '../Validator/ValidationRules';
+
+class StringValidator {
+    constructor(validation = {}) {
+        this.minLength = validation.minLength || null;
+        this.maxLength = validation.maxLength || null;
+        this.regexp = validation.regexp || null;
+        this.required = validation.required || false;
+        this.inValidFields = [];
+    };
+
+    validate(string) {
+        this.inValidFields = [];
+        if (this.required && !string) this.inValidFields.push(rules.required);
+        if (string && this.minLength && string.length < this.minLength) this.inValidFields.push(rules.minLength);
+        if (string && this.maxLength && string.length > this.maxLength) this.inValidFields.push(rules.maxLength);
+        if (this.required && !!string && this.regexp) {
+            if (!new RegExp(this.regexp).test(string)) this.inValidFields.push(rules.regexp);
+        }
+        return this.inValidFields.length === 0;
+    }
+}
+
+export default StringValidator;

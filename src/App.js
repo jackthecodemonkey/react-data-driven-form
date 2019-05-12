@@ -1,25 +1,102 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Form from './Form';
+
+const templates = [
+  {
+    fieldType: 'text',
+    fieldName: 'name',
+    label: 'Name',
+    referenceFields: [],
+    validation: {
+      minLength: 3,
+      maxLength: 10,
+      regexp: /^[a-zA-Z]+$/,
+      required: true,
+    },
+  }, {
+    fieldType: 'text',
+    fieldName: 'age',
+    label: 'Age',
+    referenceFields: ['name'],
+    validation: {
+      minLength: 3,
+      maxLength: 10,
+      regexp: /^\d*$/,
+      required: true,
+    }
+  }, {
+    fieldType: 'text',
+    fieldName: 'address',
+    label: 'Address',
+    referenceFields: ['age', 'name'],
+    validation: {
+      minLength: 3,
+      maxLength: 10,
+      regexp: /^\d*$/,
+      required: true,
+    }
+  }, {
+    fieldType: 'select',
+    fieldName: 'state',
+    label: 'State',
+    referenceFields: [],
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ],
+    validation: {
+      required: true,
+    }
+  }
+  , {
+    fieldType: 'select',
+    fieldName: 'suburb',
+    label: 'Suburb',
+    referenceFields: ['state','address'],
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ],
+    fetchByRefAsync: true,
+    refSelector: 'state',
+    validation: {
+      required: true,
+    }
+  },
+  {
+    fieldType: 'select',
+    fieldName: 'country',
+    label: 'Country',
+    referenceFields: ['suburb'],
+    refSelector: 'suburb',
+    fetchByRefAsync: true,
+    validation: {
+      required: true,
+    }
+  }
+]
+
+const formData = {
+  name: 'Jack',
+  age: 'Age',
+  state: 'vanilla',
+  suburb: 'vanilla',
+  country: 'chocolate',
+}
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Form templates={templates} formData={formData} />
       </div>
     );
   }
