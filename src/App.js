@@ -64,7 +64,7 @@ const templates = [
     fetchByRefAsync: true,
     refSelector: 'state',
     validation: {
-      required: true,
+      required: false,
     }
   },
   {
@@ -84,7 +84,6 @@ const formData = {
   name: 'Jack',
   age: 'Age',
   state: 'vanilla',
-  suburb: 'vanilla',
   country: 'chocolate',
 }
 

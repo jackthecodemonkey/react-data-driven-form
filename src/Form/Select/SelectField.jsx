@@ -10,7 +10,8 @@ class SelectField extends React.Component {
     onChange(value) {
         this.props.onChange(value);
         if (this.props.event) {
-            this.props.event.emit('OnReferenceSelectorOptionChanged', this.props.template.fieldName, value);
+            const fieldName = this.props.fieldName || this.props.template.fieldName;
+            this.props.event.emit('OnReferenceSelectorOptionChanged', fieldName, value);
         }
     }
 
@@ -24,13 +25,12 @@ class SelectField extends React.Component {
                 : localValue = getValueObject(value);
             return localValue;
         };
-        console.log(this.props.readOnly);
-        console.log(this.props.isDisabled);
         return (
             <div>
+                <span>{ !this.props.isValid && <span>Invalid field</span> }</span>
                 <Select
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
-                    isDisabled={this.props.readOnly || !this.props.isValid}
+                    isDisabled={this.props.readOnly}
                     onChange={this.onChange}
                     value={getValue(this.props.value)}
                     options={options} />
