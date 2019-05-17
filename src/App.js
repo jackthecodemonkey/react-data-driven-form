@@ -30,7 +30,7 @@ const templates = [
     fieldType: 'text',
     fieldName: 'address',
     label: 'Address',
-    referenceFields: ['age', 'name'],
+    referenceFields: [],
     validation: {
       minLength: 3,
       maxLength: 10,
@@ -42,6 +42,8 @@ const templates = [
     fieldName: 'state',
     label: 'State',
     referenceFields: [],
+    // async: true,
+    // url: '/tesAPI/',
     options: [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
@@ -55,12 +57,13 @@ const templates = [
     fieldType: 'select',
     fieldName: 'suburb',
     label: 'Suburb',
-    referenceFields: ['state','address'],
+    referenceFields: [],
     options: [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
       { value: 'vanilla', label: 'Vanilla' }
     ],
+    url: '/tesAPI/{value}/',
     fetchByRefAsync: true,
     refSelector: 'state',
     validation: {
@@ -71,8 +74,9 @@ const templates = [
     fieldType: 'select',
     fieldName: 'country',
     label: 'Country',
-    referenceFields: ['suburb'],
+    referenceFields: [],
     refSelector: 'suburb',
+    url: '',
     fetchByRefAsync: true,
     validation: {
       required: true,

@@ -31,7 +31,13 @@ const ReferenceSelectListener = (Component) => {
       this.event.on('OnOptionsChanged', this.updateState);
       this.event.on('OnReferenceSelectorOptionChanged', (fieldName, value) => {
         if (fieldName === this.props.template.refSelector) {
-          this.event.emit('OnFetchOptions', this.props.template.fetchByRefAsync, value, this.props.template.fieldName);
+          const {
+            fetchByRefAsync,
+            url,
+            fieldName,
+          } = this.props.template;
+          const api = url.replace('{value}',value.value);
+          this.event.emit('OnFetchOptions', fetchByRefAsync, value, fieldName, api);
         }
       })
     }

@@ -14,22 +14,23 @@ const FetchOptions = (Component) => {
       }
   
       componentWillMount() {
-        this.event.on('OnFetchOptions', (async, value, eventTriggerFieldName) => {
-          this.fetchOptions(async, value, eventTriggerFieldName);
+        this.event.on('OnFetchOptions', (async, value, eventTriggerFieldName, url) => {
+          this.fetchOptions(async, value, eventTriggerFieldName, url);
         });
         const { template } = this.props;
         const { async = false, url = null } = template;
-        this.fetchOptions(async, null);
+        this.fetchOptions(async, null, null, url);
       }
   
-      fetchOptions(async, value, eventTriggerFieldName) {
-        if (async) {
+      fetchOptions(async, value, eventTriggerFieldName, url = null) {
+        if (async && url) {
           this.setState({
             loadingOptions: true,
           }, () => {
             this.event.emit('OnOptionsChanged', eventTriggerFieldName, { options: null, loadingOptions: true });
           })
           /* simulate getting options async */
+          /* call api with url given */
           setTimeout(() => {
             this.setState({
               options: [
