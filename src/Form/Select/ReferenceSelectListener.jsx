@@ -41,6 +41,7 @@ const ReferenceSelectListener = (Component) => {
     }
 
     registerEvents() {
+      /* Use events instead of componentWillReceiveProps */
       this.event.on('AsyncOptionsUpdated', this.updateState);
       this.event.on('OnOptionsChanged', this.updateState);
       this.event.on('OnReferenceSelectorOptionChanged', (fieldName, value) => {

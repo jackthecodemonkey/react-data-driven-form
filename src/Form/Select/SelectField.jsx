@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 
+const getValueObject = (value, options) => options.find(option => option.value === value);
+
+const getValue = (value, options) => {
+    return typeof value === 'object'
+        ? value
+        : getValueObject(value, options);
+};
+
 class SelectField extends React.Component {
     constructor(props) {
         super(props);
@@ -16,26 +24,15 @@ class SelectField extends React.Component {
     }
 
     render() {
-        let options = this.props.options;
-        const getValueObject = value => options.find(option => option.value === value);
-        const getValue = value => {
-            let localValue;
-            typeof value === 'object'
-                ? localValue = value
-                : localValue = getValueObject(value);
-            return localValue;
-        };
-        console.log(this.props.template.fieldName)
-        console.log(this.props.readOnly);
         return (
             <div>
-                <span>{ !this.props.isValid && <span>Invalid field</span> }</span>
+                <span>{!this.props.isValid && <span>Invalid field</span>}</span>
                 <Select
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
                     isDisabled={this.props.readOnly}
                     onChange={this.onChange}
-                    value={getValue(this.props.value)}
-                    options={options} />
+                    value={getValue(this.props.value, this.props.options)}
+                    options={this.props.options} />
             </div>
         );
     }
