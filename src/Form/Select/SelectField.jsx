@@ -25,6 +25,8 @@ class SelectField extends React.Component {
                 : localValue = getValueObject(value);
             return localValue;
         };
+        console.log(this.props.template.fieldName)
+        console.log(this.props.readOnly);
         return (
             <div>
                 <span>{ !this.props.isValid && <span>Invalid field</span> }</span>

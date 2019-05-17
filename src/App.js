@@ -57,7 +57,7 @@ const templates = [
     fieldType: 'select',
     fieldName: 'suburb',
     label: 'Suburb',
-    referenceFields: [],
+    referenceFields: ['state'],
     options: [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
@@ -74,9 +74,9 @@ const templates = [
     fieldType: 'select',
     fieldName: 'country',
     label: 'Country',
-    referenceFields: [],
-    refSelector: 'suburb',
-    url: '',
+    referenceFields: ['suburb'],
+    refSelector: ['suburb'],
+    url: '/country',
     fetchByRefAsync: true,
     validation: {
       required: true,
@@ -87,8 +87,8 @@ const templates = [
 const formData = {
   name: 'Jack',
   age: 'Age',
-  state: 'vanilla',
-  country: 'chocolate',
+  // state: 'vanilla',
+  // country: 'chocolate',
 }
 
 class App extends Component {
@@ -99,7 +99,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Form templates={templates} formData={formData} />
+        <Form
+          /* pre-defined objects for generating custom urls */
+          overrideOptions={{
+            suburb: (value) => {
+              return `api/${value}/`
+            }
+          }}
+          templates={templates}
+          formData={formData} />
       </div>
     );
   }
