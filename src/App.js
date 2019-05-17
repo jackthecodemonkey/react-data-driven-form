@@ -67,7 +67,7 @@ const templates = [
     fetchByRefAsync: true,
     refSelector: 'state',
     validation: {
-      required: false,
+      required: true,
     }
   },
   {
@@ -87,8 +87,16 @@ const templates = [
 const formData = {
   name: 'Jack',
   age: 'Age',
-  // state: 'vanilla',
-  // country: 'chocolate',
+  state: 'vanilla',
+  country: 'chocolate',
+}
+
+const overrideOptions = () => {
+  return {
+    suburb: (value) => {
+      return `api/${value}/`
+    }
+  }
 }
 
 class App extends Component {
@@ -101,11 +109,7 @@ class App extends Component {
       <div className="App">
         <Form
           /* pre-defined objects for generating custom urls */
-          overrideOptions={{
-            suburb: (value) => {
-              return `api/${value}/`
-            }
-          }}
+          overrideOptions={overrideOptions}
           templates={templates}
           formData={formData} />
       </div>
