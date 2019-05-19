@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
 import events from '../event';
 
-const getUrl = (url, value) => {
+export const getUrl = (url, value) => {
+  if (typeof url !== 'function' && typeof url !== 'string') {
+    throw new Error('url shouuld be either a function or a string');
+  }
+  if (typeof url === 'string' && url.indexOf('{value}') === -1) {
+    throw new Error('url should contain a {value}');
+  }
   return typeof url === 'function'
     ? url(value)
     : url.replace('{value}', value)
 }
 
-const IsFieldInReferences = (field, fieldReferences) => {
+export const IsFieldInReferences = (field, fieldReferences) => {
+  if (!fieldReferences) return false;
+  if (typeof fieldReferences === 'object' && !Array.isArray(fieldReferences)) {
+    throw new Error('fieldReferences should be either a string or an array');
+  }
+  if(typeof fieldReferences !== 'object' && typeof fieldReferences !== 'string') {
+    throw new Error('fieldReferences should be either a string or an array');
+  }
+
   return typeof fieldReferences === 'object'
     ? fieldReferences.includes(field)
     : field === fieldReferences;
@@ -43,7 +57,7 @@ const ReferenceSelectListener = (Component) => {
     registerEvents() {
       /* Use events instead of componentWillReceiveProps */
       this.event.on('AsyncOptionsUpdated', this.updateState);
-      this.event.on('OnOptionsChanged', this.updateState);
+      this.event.on('OptionsUpdated', this.updateState);
       this.event.on('OnReferenceSelectorOptionChanged', (fieldName, value) => {
         if (IsFieldInReferences(fieldName, this.props.template.refSelector)) {
           const {
@@ -54,7 +68,6 @@ const ReferenceSelectListener = (Component) => {
           this.event.emit(
             'OnFetchOptions',
             fetchByRefAsync,
-            value,
             fieldName,
             getUrl(url, value.value)
           );

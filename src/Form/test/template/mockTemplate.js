@@ -108,7 +108,7 @@ const templates = [
         required: true,
       }
     }
-    , {
+    , { 
       fieldType: 'select',
       fieldName: 'suburb',
       label: 'Suburb',

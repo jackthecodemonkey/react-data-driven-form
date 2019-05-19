@@ -76,7 +76,7 @@ const templates = [
     label: 'Country',
     referenceFields: ['suburb'],
     refSelector: ['suburb'],
-    url: '/country',
+    url: '/country/{value}/',
     fetchByRefAsync: true,
     validation: {
       required: true,

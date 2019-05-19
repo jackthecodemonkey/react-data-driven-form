@@ -16,49 +16,53 @@ const FetchOptions = (Component) => {
     componentWillMount() {
       this.event.on('OnFetchOptions', this.fetchOptions);
       const { async = false, url = null } = this.props.template;
-      this.fetchOptions(async, null, null, url);
+      this.fetchOptions(async, null, url);
     }
 
     triggerOptionsChangeEvent(eventTriggerFieldName) {
       const eventName = eventTriggerFieldName
-        ? 'OnOptionsChanged'
+        ? 'OptionsUpdated'
         : 'AsyncOptionsUpdated';
 
       const fieldName = eventTriggerFieldName
         ? eventTriggerFieldName
         : this.props.template.fieldName;
-        
+
       this.event.emit(eventName, fieldName, { ...this.state });
     }
 
-    fetchOptions(async, value, eventTriggerFieldName, url = null) {
+    fetchOptionsAsync(url, eventTriggerFieldName) {
+      /* simulate getting options async */
+      /* call api with url given && update options */
+      setTimeout(() => {
+        this.setState({
+          options: [
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'strawberry2', label: 'Strawberry2' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry3', label: 'Strawberry3' },
+            { value: 'vanilla', label: 'Vanilla' },
+          ],
+          loadingOptions: false,
+        }, () => {
+          this.triggerOptionsChangeEvent(eventTriggerFieldName);
+        })
+      }, 2000)
+    }
+
+    fetchOptions(async, eventTriggerFieldName, url = null) {
       if (async && url) {
         this.setState({
           loadingOptions: true,
         }, () => {
-          this.event.emit('OnOptionsChanged', eventTriggerFieldName, { options: null, loadingOptions: true });
+          this.event.emit('OptionsUpdated', eventTriggerFieldName, { options: null, loadingOptions: true });
         })
-        /* simulate getting options async */
-        /* call api with url given */
-        setTimeout(() => {
-          this.setState({
-            options: [
-              { value: 'strawberry', label: 'Strawberry' },
-              { value: 'strawberry2', label: 'Strawberry2' },
-              { value: 'chocolate', label: 'Chocolate' },
-              { value: 'strawberry3', label: 'Strawberry3' },
-              { value: 'vanilla', label: 'Vanilla' },
-            ],
-            loadingOptions: false,
-          }, () => {
-            this.triggerOptionsChangeEvent(eventTriggerFieldName);
-          })
-        }, 2000)
+        this.fetchOptionsAsync(url, eventTriggerFieldName);
       } else {
         this.setState({
           options: this.props.template.options
         }, () => {
-          this.event.emit('OnOptionsChanged', eventTriggerFieldName, { ...this.state });
+          this.event.emit('OptionsUpdated', eventTriggerFieldName, { ...this.state });
         })
       }
     }
