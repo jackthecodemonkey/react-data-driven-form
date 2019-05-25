@@ -1,44 +1,16 @@
 import React from 'react';
-import SelectField, { SelectValidator } from './Select';
+import SelectField from './Select';
 import { OptionsChangeListener, FetchOptions } from './Common';
-import TextField, { StringValidator } from './TextField';
-import Radio, { RadioValidator } from './Radio';
-import Checkbox, { CheckboxValidator } from './Checkbox';
-import { FieldValidator, ReferenceFieldsValidator } from './Validator';
+import TextField from './TextField';
+import Radio from './Radio';
+import Checkbox from './Checkbox';
+import {
+  FieldValidator,
+  ReferenceFieldsValidator,
+  ValidatorSelector,
+  ReferenceValidator,
+} from './Validator';
 import events from './event';
-
-const GetValidator = ({ fieldType, validation }) => {
-  let ValidationFactory = null;
-  switch (fieldType) {
-    case 'text':
-    case 'textArea':
-      ValidationFactory = StringValidator;
-      break;
-    case 'select':
-      ValidationFactory = SelectValidator;
-      break;
-    case 'radio':
-      ValidationFactory = RadioValidator;
-      break;
-    case 'checkbox':
-      ValidationFactory = CheckboxValidator;
-      break;
-    default:
-      ValidationFactory = StringValidator;
-  }
-  return new ValidationFactory(validation);
-}
-
-const GetReferenceValidator = (referenceFields, templates) => {
-  if (!referenceFields.length) return null;
-  return referenceFields.map((referenceField => {
-    const matchedField = templates.find(template => template.fieldName === referenceField);
-    return {
-      fieldName: referenceField,
-      validator: GetValidator({ fieldType: matchedField.fieldType, validation: matchedField.validation }),
-    }
-  }))
-}
 
 class Form extends React.Component {
   constructor(props) {
@@ -51,6 +23,10 @@ class Form extends React.Component {
   }
 
   componentWillMount() {
+    this.event.on('onChange', (state, { fieldName }) => {
+      // console.log(state);
+      // console.log(fieldName);
+    })
     this.initializeFields()
   }
 
@@ -77,8 +53,8 @@ class Form extends React.Component {
       }
       return <Field
         event={this.event}
-        referenceValidators={GetReferenceValidator(template.referenceFields, this.props.templates)}
-        validator={GetValidator(template)}
+        referenceValidators={ReferenceValidator(template.referenceFields, this.props.templates)}
+        validator={ValidatorSelector(template)}
         template={template}
         formData={this.props.formData} />
     })
