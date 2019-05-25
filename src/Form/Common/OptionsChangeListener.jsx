@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import events from '../event';
 
 export const getUrl = (url, value) => {
@@ -27,8 +27,8 @@ export const IsFieldInReferences = (field, fieldReferences) => {
     : field === fieldReferences;
 }
 
-const ReferenceSelectListener = (Component) => {
-  return class ReferenceSelectListenerComponent extends React.Component {
+const OptionsChangeListener = (Component) => {
+  return class OptionsChangeListenerComponent extends React.Component {
     constructor(props) {
       super(props);
       this.updateState = this.updateState.bind(this);
@@ -84,4 +84,4 @@ const ReferenceSelectListener = (Component) => {
   }
 }
 
-export default ReferenceSelectListener;
+export default OptionsChangeListener;

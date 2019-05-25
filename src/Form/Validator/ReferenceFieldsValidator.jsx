@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import events from '../event';
 
 const ReferenceFieldsValidator = (Component) => {

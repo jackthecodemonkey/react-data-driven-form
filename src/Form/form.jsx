@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
-import SelectField, { FetchOptions, ReferenceSelectListener, SelectValidator } from './Select';
+import React from 'react';
+import SelectField, { SelectValidator } from './Select';
+import { OptionsChangeListener, FetchOptions } from './Common';
 import TextField, { StringValidator } from './TextField';
+import Radio, { RadioValidator } from './Radio';
+import Checkbox, { CheckboxValidator } from './Checkbox';
 import { FieldValidator, ReferenceFieldsValidator } from './Validator';
 import events from './event';
 
@@ -13,6 +16,12 @@ const GetValidator = ({ fieldType, validation }) => {
       break;
     case 'select':
       ValidationFactory = SelectValidator;
+      break;
+    case 'radio':
+      ValidationFactory = RadioValidator;
+      break;
+    case 'checkbox':
+      ValidationFactory = CheckboxValidator;
       break;
     default:
       ValidationFactory = StringValidator;
@@ -58,8 +67,13 @@ class Form extends React.Component {
           if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
             template.url = this.props.overrideOptions[template.fieldName];
           }
-          Field = ReferenceFieldsValidator(FetchOptions(ReferenceSelectListener(FieldValidator(SelectField))));
+          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(SelectField))));
           break;
+        case 'radio':
+          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Radio))));
+          break;
+        case 'checkbox':
+          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Checkbox))));
       }
       return <Field
         event={this.event}

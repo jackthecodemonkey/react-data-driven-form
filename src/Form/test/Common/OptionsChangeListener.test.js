@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ReferenceSelectListener, { getUrl, IsFieldInReferences } from '../../Select/ReferenceSelectListener';
+import OptionsChangeListener from '../../Common/OptionsChangeListener';
 import event from '../../event';
 
 const syncTemplates = {
@@ -21,29 +21,29 @@ const syncTemplates = {
 };
 
 let Component = null;
-let ReferenceSelectListenerComponent = null;
+let OptionsChangeListenerComponent = null;
 let wrapper = null;
 
 beforeEach(() => {
     Component = () => <div>Test Component</div>;
-    ReferenceSelectListenerComponent = ReferenceSelectListener(Component);
-    wrapper = shallow(<ReferenceSelectListenerComponent template={syncTemplates} />);
+    OptionsChangeListenerComponent = OptionsChangeListener(Component);
+    wrapper = shallow(<OptionsChangeListenerComponent template={syncTemplates} />);
 });
 
-test('ReferenceSelectListener should render a component passed', () => {
+test('OptionsChangeListener should render a component passed', () => {
     expect(wrapper.find('Component').length).toEqual(1);
 });
 
 test('registerEvents should be called on mount', () => {
-    const spy = jest.spyOn(ReferenceSelectListenerComponent.prototype, 'registerEvents');
-    wrapper = shallow(<ReferenceSelectListenerComponent template={syncTemplates} />);
+    const spy = jest.spyOn(OptionsChangeListenerComponent.prototype, 'registerEvents');
+    wrapper = shallow(<OptionsChangeListenerComponent template={syncTemplates} />);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
 });
 
 test('Three events need to be initialized', () => {
     const localEvent = event();
-    wrapper = shallow(<ReferenceSelectListenerComponent event={localEvent} template={syncTemplates} />);
+    wrapper = shallow(<OptionsChangeListenerComponent event={localEvent} template={syncTemplates} />);
     expect(localEvent.list.has('AsyncOptionsUpdated')).toEqual(true);
     expect(localEvent.list.has('OptionsUpdated')).toEqual(true);
     expect(localEvent.list.has('OnReferenceSelectorOptionChanged')).toEqual(true);
@@ -58,7 +58,7 @@ test('Options via props needs to be overriden by state', () => {
         { value: 'aa', label: 'AA' },
         { value: 'bb', label: 'BB' },
     ]
-    wrapper = shallow(<ReferenceSelectListenerComponent options={initialOptions} template={syncTemplates} />);
+    wrapper = shallow(<OptionsChangeListenerComponent options={initialOptions} template={syncTemplates} />);
     wrapper.instance().updateState('suburb',
         { options: updatedOptions, loadingOptions: true });
     expect(wrapper.state().options).toEqual(updatedOptions);

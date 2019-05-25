@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FetchOptions from '../../Select/FetchOptions';
+import FetchOptions from '../../Common/FetchOptions';
 import event from '../../event';
 
 const syncTemplates = {
