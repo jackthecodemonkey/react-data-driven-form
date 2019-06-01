@@ -44,9 +44,9 @@ test('registerEvents should be called on mount', () => {
 test('Three events need to be initialized', () => {
     const localEvent = event();
     wrapper = shallow(<OptionsChangeListenerComponent event={localEvent} template={syncTemplates} />);
-    expect(localEvent.list.has('AsyncOptionsUpdated')).toEqual(true);
-    expect(localEvent.list.has('OptionsUpdated')).toEqual(true);
-    expect(localEvent.list.has('OnReferenceSelectorOptionChanged')).toEqual(true);
+    expect(Object.keys(localEvent.getEvents()['AsyncOptionsUpdated']).length).toEqual(1);
+    expect(Object.keys(localEvent.getEvents()['OptionsUpdated']).length).toEqual(1);
+    expect(Object.keys(localEvent.getEvents()['OnReferenceSelectorOptionChanged']).length).toEqual(1);
 });
 
 test('Options via props needs to be overriden by state', () => {

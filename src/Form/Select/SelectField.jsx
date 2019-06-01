@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import makeid from '../RandomStringGen';
 
@@ -30,7 +30,7 @@ class SelectField extends React.Component {
     }
 
     onChange(value) {
-        this.props.onChange(value);
+        this.props.onChange && this.props.onChange(value);
         if (this.props.event) {
             const fieldName = this.props.fieldName || this.props.template.fieldName;
             this.props.event.emit('OnReferenceSelectorOptionChanged', fieldName, value);

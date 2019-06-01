@@ -60,7 +60,7 @@ test('FetchOptions should have an instance of event via props', () => {
 test('Event needs to be initialized on component mount', () => {
     const localEvent = event();
     wrapper = shallow(<FetchOptionsComponent event={localEvent} template={syncTemplates} />);
-    expect(localEvent.list.has('OnFetchOptions')).toEqual(true);
+    expect(Object.keys(localEvent.getEvents()['OnFetchOptions']).length).toEqual(1);
 });
 
 test('Spy on fetchOptions method', () => {

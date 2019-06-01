@@ -3,26 +3,27 @@
 
 const event = () => {
     let events = {};
-
+    let hasKeyUsed = false;
     return {
         on(event, callback) {
-            if (event.indexOf(':')) {
+            if (event.indexOf(':') > -1) {
+                hasKeyUsed = true;
                 const [eventName, eventId] = event.split(':');
                 if (!events[eventName]) events[eventName] = {};
                 events[eventName][eventId] = callback;
             } else {
-                if (!events[event]) events[event] = new Map();
+                if (!events[event]) events[event] = [];
                 events[event].push(callback);
             }
             return this;
         },
 
         off(event) {
-            if (event.indexOf(':')) {
+            if (event.indexOf(':') > -1) {
                 const [eventName, eventId] = event.split(':');
                 delete events[eventName][eventId];
             } else {
-                events[event].delete(event);
+                events[event] = [];
             }
             return this;
         },
@@ -32,55 +33,25 @@ const event = () => {
             return this;
         },
 
-        getEvents(){
-            return events;
+        getEvents(eventName) {
+            return eventName
+            ? events[eventName]
+            : events;
         },
 
         emit(event, ...args) {
-            if (!events) return;
-            if (event.indexOf(':')) {
-                const eventName = event.split(':')[0];
-                Object.keys(events[eventName]).forEach((eventId) => {
-                    setTimeout(() => events[eventName][eventId] && events[eventName][eventId].call(null, ...args), 0);
-                }) 
+            if (!events || !events[event]) return;
+            if (hasKeyUsed) {
+                Object.keys(events[event]).forEach((eventId) => {
+                    setTimeout(() => events[event][eventId] && typeof events[event][eventId] === 'function' && events[event][eventId].call(null, ...args), 0);
+                })
             } else {
-                events[event].forEach(callback => setTimeout(() => callback.call(null, ...args), 0));
+                Object.keys(events[event]).forEach(eventName => setTimeout(() => events[event][eventName].call(null, ...args), 0));
             }
+
             return this;
         }
     }
 }
-
-// const events = () => ({
-//     list: new Map(),
-
-//     on(event, callback) {
-//         if (!this.list.has(event)) {
-//             this.list.set(event, []);
-//         }
-//         this.list.get(event).push(callback);
-//         return this;
-//     },
-
-//     off(event = null) {
-//         this.list.delete(event);
-//         return this;
-//     },
-
-//     clear() {
-//         this.list.clear();
-//         return this;
-//     },
-
-//     emit(event, ...args) {
-//         if (!this.list.has(event)) {
-//             return false;
-//         }
-//         this.list
-//             .get(event)
-//             .forEach(callback => setTimeout(() => callback.call(null, ...args), 0));
-//         return true;
-//     },
-// });
 
 export default event;
