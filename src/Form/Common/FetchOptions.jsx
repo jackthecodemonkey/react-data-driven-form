@@ -1,5 +1,6 @@
 import React from 'react';
 import events from '../event';
+import makeid from '../RandomStringGen';
 
 const FetchOptions = (Component) => {
   return class FetchOptionsComponent extends React.Component {
@@ -7,6 +8,7 @@ const FetchOptions = (Component) => {
       super(props);
       this.event = this.props.event || events();
       this.fetchOptions = this.fetchOptions.bind(this);
+      this.OnFetchOptionsEventKey = makeid();
       this.state = {
         loadingOptions: false,
         options: [],
@@ -14,9 +16,13 @@ const FetchOptions = (Component) => {
     }
 
     componentWillMount() {
-      this.event.on('OnFetchOptions', this.fetchOptions);
+      this.event.on(`OnFetchOptions:${this.OnFetchOptionsEventKey}`, this.fetchOptions);
       const { async = false, url = null } = this.props.template;
       this.fetchOptions(async, null, url);
+    }
+
+    componentWillUnmount(){
+      this.event.off(`OnFetchOptions:${this.OnFetchOptionsEventKey}`);
     }
 
     triggerOptionsChangeEvent(eventTriggerFieldName) {

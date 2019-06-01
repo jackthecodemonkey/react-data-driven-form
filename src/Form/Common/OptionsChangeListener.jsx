@@ -1,5 +1,6 @@
 import React from 'react';
 import events from '../event';
+import makeid from '../RandomStringGen';
 
 export const getUrl = (url, value) => {
   if (typeof url !== 'function' && typeof url !== 'string') {
@@ -18,7 +19,7 @@ export const IsFieldInReferences = (field, fieldReferences) => {
   if (typeof fieldReferences === 'object' && !Array.isArray(fieldReferences)) {
     throw new Error('fieldReferences should be either a string or an array');
   }
-  if(typeof fieldReferences !== 'object' && typeof fieldReferences !== 'string') {
+  if (typeof fieldReferences !== 'object' && typeof fieldReferences !== 'string') {
     throw new Error('fieldReferences should be either a string or an array');
   }
 
@@ -33,6 +34,10 @@ const OptionsChangeListener = (Component) => {
       super(props);
       this.updateState = this.updateState.bind(this);
       this.event = this.props.event || events();
+      this.AsyncOptionsUpdatedEventKey = makeid();
+      this.OptionsUpdatedEventKey = makeid();
+      this.onChangeKey = makeid();
+      this.OnReferenceSelectorOptionChangedEventKey = makeid();
       this.state = {
         loadingOptions: this.props.loadingOptions || false,
         options: this.props.options || [],
@@ -54,24 +59,40 @@ const OptionsChangeListener = (Component) => {
       this.registerEvents();
     }
 
+    componentWillUnmount(){
+      this.event.off(`AsyncOptionsUpdated:${this.AsyncOptionsUpdatedEventKey}`);
+      this.event.off(`OptionsUpdated:${this.OptionsUpdatedEventKey}`);
+      this.event.off(`OnReferenceSelectorOptionChanged:${this.OnReferenceSelectorOptionChangedEventKey}`);
+      this.event.off(`onChange:${this.onChangeKey}`);
+    }
+
+    triggerOptionFetch(value) {
+      const {
+        fetchByRefAsync,
+        url,
+        fieldName,
+      } = this.props.template;
+      this.event.emit(
+        'OnFetchOptions',
+        fetchByRefAsync,
+        fieldName,
+        getUrl(url, value || (value && value.value))
+      );
+    }
+
     registerEvents() {
-      /* Use events instead of componentWillReceiveProps */
-      this.event.on('AsyncOptionsUpdated', this.updateState);
-      this.event.on('OptionsUpdated', this.updateState);
-      this.event.on('OnReferenceSelectorOptionChanged', (fieldName, value) => {
+      this.event.on(`AsyncOptionsUpdated:${this.AsyncOptionsUpdatedEventKey}`, this.updateState);
+      this.event.on(`OptionsUpdated:${this.OptionsUpdatedEventKey}`, this.updateState);
+      this.event.on(`OnReferenceSelectorOptionChanged:${this.OnReferenceSelectorOptionChangedEventKey}`, (fieldName, value) => {
         if (IsFieldInReferences(fieldName, this.props.template.refSelector)) {
-          const {
-            fetchByRefAsync,
-            url,
-            fieldName,
-          } = this.props.template;
-          this.event.emit(
-            'OnFetchOptions',
-            fetchByRefAsync,
-            fieldName,
-            getUrl(url, value.value)
-          );
-        }
+          this.triggerOptionFetch(value);
+          this.event.emit('ResetSelectedValue', this.props.template.fieldName);
+        };
+      });
+      this.event.on(`onChange:${this.onChangeKey}`, ({ isValid, value }, template) => {
+        if (this.props.template.fetchByRefAsync && isValid && IsFieldInReferences(template.fieldName, this.props.template.refSelector)) {
+          this.triggerOptionFetch(value);
+        };
       })
     }
 

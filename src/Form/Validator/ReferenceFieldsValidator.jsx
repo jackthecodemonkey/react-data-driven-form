@@ -1,10 +1,12 @@
 import React from 'react';
 import events from '../event';
+import makeid from '../RandomStringGen';
 
 const ReferenceFieldsValidator = (Component) => {
   return class ReferenceFieldsValidatorComponent extends React.Component {
     constructor(props) {
       super(props);
+      this.onChangeEventKey = makeid();
       this.event = this.props.event || events();
       this.state = {
         readOnly: this.props.readOnly !== undefined ? this.props.readOnly : false,
@@ -39,13 +41,17 @@ const ReferenceFieldsValidator = (Component) => {
 
     componentWillMount() {
       this.validateReferenceFields(this.state.validFields);
-      this.event.on('onChange', (state, template) => {
+      this.event.on(`onChange:${this.onChangeEventKey}`, (state, template) => {
         const { fieldName } = template;
         const { value } = state;
         const validFields = { ...this.state.validFields };
         if ([fieldName] in validFields) validFields[fieldName] = value;
         this.setState({ validFields }, () => this.validateReferenceFields(validFields));
       })
+    }
+
+    componentWillUnmount(){
+      this.event.off(`onChange:${this.onChangeEventKey}`);
     }
 
     render() {

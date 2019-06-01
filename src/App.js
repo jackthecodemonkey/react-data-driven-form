@@ -37,23 +37,56 @@ const templates = [
       regexp: /^\d*$/,
       required: true,
     }
-  }, 
+  },
   {
     fieldType: 'radio',
     fieldName: 'fruit',
     label: 'Fruit',
     referenceFields: [],
+    conditional: true,
     // async: true,
     // url: '/tesAPI/',
+    defaultField: 'billingAddress',
     options: [
       { value: 'apple', label: 'Apple' },
       { value: 'orange', label: 'Orange' },
       { value: 'watermelon', label: 'Watermelon' }
     ],
+    fields: [
+      {
+        fieldType: 'text',
+        fieldName: 'billingAddress',
+        label: 'Billing Address',
+        conditionalListener: 'fruit',
+        show: 'orange',
+        referenceFields: [],
+        validation: {
+          minLength: 3,
+          maxLength: 10,
+          regexp: /^\d*$/,
+          required: true,
+        }
+      },
+      {
+        fieldType: 'text',
+        fieldName: 'shippingAddress',
+        label: 'Shipping Address',
+        conditionalListener: 'fruit',
+        show: 'watermelon',
+        referenceFields: [],
+        validation: {
+          minLength: 3,
+          maxLength: 10,
+          regexp: /^\d*$/,
+          required: true,
+        }
+      }
+    ],
     validation: {
       required: true,
     }
   },
+
   {
     fieldType: 'checkbox',
     fieldName: 'icecream',
@@ -69,62 +102,63 @@ const templates = [
       // maxSelect: 2,
       // minSelect: 1,
     }
+  },
+  {
+    fieldType: 'select',
+    fieldName: 'state',
+    label: 'State',
+    referenceFields: [],
+    // async: true,
+    // url: '/tesAPI/',
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ],
+    validation: {
+      required: true,
+    }
   }
-  // {
-  //   fieldType: 'select',
-  //   fieldName: 'state',
-  //   label: 'State',
-  //   referenceFields: ['address'],
-  //   // async: true,
-  //   // url: '/tesAPI/',
-  //   options: [
-  //     { value: 'chocolate', label: 'Chocolate' },
-  //     { value: 'strawberry', label: 'Strawberry' },
-  //     { value: 'vanilla', label: 'Vanilla' }
-  //   ],
-  //   validation: {
-  //     required: true,
-  //   }
-  // }
-  // , {
-  //   fieldType: 'select',
-  //   fieldName: 'suburb',
-  //   label: 'Suburb',
-  //   referenceFields: ['state'],
-  //   options: [
-  //     { value: 'chocolate', label: 'Chocolate' },
-  //     { value: 'strawberry', label: 'Strawberry' },
-  //     { value: 'vanilla', label: 'Vanilla' }
-  //   ],
-  //   url: '/tesAPI/{value}/',
-  //   fetchByRefAsync: true,
-  //   refSelector: 'state',
-  //   validation: {
-  //     required: true,
-  //     // noValidateOnMount: true,
-  //   }
-  // },
-  // {
-  //   fieldType: 'select',
-  //   fieldName: 'country',
-  //   label: 'Country',
-  //   referenceFields: ['suburb'],
-  //   refSelector: ['suburb'],
-  //   url: '/country/{value}/',
-  //   fetchByRefAsync: true,
-  //   validation: {
-  //     required: true,
-  //   }
-  // }
+  , {
+    fieldType: 'select',
+    fieldName: 'suburb',
+    label: 'Suburb',
+    referenceFields: ['state'],
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ],
+    url: '/tesAPI/{value}/',
+    fetchByRefAsync: true,
+    refSelector: 'state',
+    validation: {
+      required: true,
+      // noValidateOnMount: true,
+    }
+  },
+  {
+    fieldType: 'select',
+    fieldName: 'country',
+    label: 'Country',
+    referenceFields: ['suburb'],
+    refSelector: ['suburb'],
+    url: '/country/{value}/',
+    fetchByRefAsync: true,
+    validation: {
+      required: true,
+    }
+  }
 ]
 
 const formData = {
   name: 'Jack',
   age: 'Age',
   state: 'vanilla',
+  suburb: 'strawberry',
   country: 'chocolate',
   fruit: 'apple',
-  icecream: ['apple','watermelon']
+  icecream: ['apple', 'watermelon']
 }
 
 const overrideOptions = () => {

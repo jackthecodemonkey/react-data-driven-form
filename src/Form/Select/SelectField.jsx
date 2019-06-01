@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import makeid from '../RandomStringGen';
 
 const getValueObject = (value, options) => options.find(option => option.value === value);
 
@@ -12,7 +13,20 @@ const getValue = (value, options) => {
 class SelectField extends React.Component {
     constructor(props) {
         super(props);
+        this.ResetSelectedValueEventKey = makeid();
         this.onChange = this.onChange.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.event.on(`ResetSelectedValue:${this.ResetSelectedValueEventKey}`, fieldName => {
+            if (fieldName === this.props.template.fieldName) {
+                this.onChange(null);
+            }
+        })
+    }
+
+    componentWillUnmount(){
+        this.props.event.off(`ResetSelectedValue:${this.ResetSelectedValueEventKey}`);
     }
 
     onChange(value) {

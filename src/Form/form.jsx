@@ -10,7 +10,14 @@ import {
   ValidatorSelector,
   ReferenceValidator,
 } from './Validator';
+
+import {
+  ConditionalFieldsListener,
+  ConditionalFieldsNotifier
+} from './ConditionalFields';
+
 import events from './event';
+
 
 class Form extends React.Component {
   constructor(props) {
@@ -30,33 +37,55 @@ class Form extends React.Component {
     this.initializeFields()
   }
 
+  componentWillUnmount() {
+    this.event.clear();
+  }
+
+  getFieldComponent(Field, template) {
+    return <Field
+      event={this.event}
+      referenceValidators={ReferenceValidator(template.referenceFields, this.props.templates)}
+      validator={ValidatorSelector(template)}
+      template={template}
+      formData={this.props.formData} />
+  }
+
+  buildComponent(template) {
+    let Field = null;
+    switch (template.fieldType) {
+      case 'text':
+      case 'textArea':
+        Field = ReferenceFieldsValidator(FieldValidator(TextField));
+        break;
+      case 'select':
+        if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
+          template.url = this.props.overrideOptions[template.fieldName];
+        }
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(SelectField))));
+        break;
+      case 'radio':
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Radio))));
+        break;
+      case 'checkbox':
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Checkbox))));
+        break;
+    }
+
+    if (template.conditionalListener) Field = ConditionalFieldsListener(Field);
+
+    return template.conditional
+      ? Field
+      : this.getFieldComponent(Field, template);
+  }
+
   initializeFields() {
     this.fields = this.props.templates.map(template => {
-      const fieldType = template.fieldType;
-      let Field = null;
-      switch (fieldType) {
-        case 'text':
-        case 'textArea':
-          Field = ReferenceFieldsValidator(FieldValidator(TextField));
-          break;
-        case 'select':
-          if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
-            template.url = this.props.overrideOptions[template.fieldName];
-          }
-          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(SelectField))));
-          break;
-        case 'radio':
-          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Radio))));
-          break;
-        case 'checkbox':
-          Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Checkbox))));
+      let Field = this.buildComponent(template);
+      if (template.conditional) {
+        const conditionalFields = template.fields.map(field => this.buildComponent(field));
+        Field = this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields), template);
       }
-      return <Field
-        event={this.event}
-        referenceValidators={ReferenceValidator(template.referenceFields, this.props.templates)}
-        validator={ValidatorSelector(template)}
-        template={template}
-        formData={this.props.formData} />
+      return Field;
     })
   }
 
