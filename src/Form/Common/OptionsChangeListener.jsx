@@ -86,7 +86,7 @@ const OptionsChangeListener = (Component) => {
       this.event.on(`OnReferenceSelectorOptionChanged:${this.OnReferenceSelectorOptionChangedEventKey}`, (fieldName, value) => {
         if (IsFieldInReferences(fieldName, this.props.template.refSelector)) {
           this.triggerOptionFetch(value);
-          this.event.emit('ResetSelectedValue', this.props.template.fieldName);
+          this.event.emit('ResetCurrentSelection', this.props.template.fieldName);
         };
       });
       this.event.on(`onChange:${this.onChangeKey}`, ({ isValid, value }, template) => {

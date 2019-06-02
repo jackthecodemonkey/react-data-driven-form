@@ -9,6 +9,7 @@ import {
   ReferenceFieldsValidator,
   ValidatorSelector,
   ReferenceValidator,
+  ResetValueNotifier,
 } from './Validator';
 
 import {
@@ -55,19 +56,19 @@ class Form extends React.Component {
     switch (template.fieldType) {
       case 'text':
       case 'textArea':
-        Field = ReferenceFieldsValidator(FieldValidator(TextField));
+        Field = ReferenceFieldsValidator(FieldValidator(ResetValueNotifier(TextField)));
         break;
       case 'select':
         if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
           template.url = this.props.overrideOptions[template.fieldName];
         }
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(SelectField))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(SelectField)))));
         break;
       case 'radio':
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Radio))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(Radio)))));
         break;
       case 'checkbox':
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(Checkbox))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(Checkbox)))));
         break;
     }
 

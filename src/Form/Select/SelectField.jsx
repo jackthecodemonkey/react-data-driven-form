@@ -18,15 +18,15 @@ class SelectField extends React.Component {
     }
 
     componentWillMount() {
-        this.props.event.on(`ResetSelectedValue:${this.ResetSelectedValueEventKey}`, fieldName => {
+        this.props.event.on(`ResetCurrentSelection:${this.ResetSelectedValueEventKey}`, fieldName => {
             if (fieldName === this.props.template.fieldName) {
                 this.onChange(null);
             }
         })
     }
 
-    componentWillUnmount(){
-        this.props.event.off(`ResetSelectedValue:${this.ResetSelectedValueEventKey}`);
+    componentWillUnmount() {
+        this.props.event.off(`ResetCurrentSelection:${this.ResetSelectedValueEventKey}`);
     }
 
     onChange(value) {

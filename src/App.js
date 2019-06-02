@@ -19,6 +19,7 @@ const templates = [
     fieldType: 'text',
     fieldName: 'age',
     label: 'Age',
+    clearIfReferenceInvalid: true,
     referenceFields: ['name'],
     validation: {
       minLength: 3,
@@ -29,8 +30,8 @@ const templates = [
   }, {
     fieldType: 'text',
     fieldName: 'address',
-    label: 'Address',
-    referenceFields: [],
+    label: 'Address', 
+    referenceFields: ['age','name'], /* support more than one reference fields check */
     validation: {
       minLength: 3,
       maxLength: 10,

@@ -6,7 +6,6 @@ const TextField = props => {
         style = {},
         onChange,
         classNames = '',
-        value,
         label = '',
         isValid,
     } = props;
@@ -15,15 +14,14 @@ const TextField = props => {
         outline: 'none',
         border: !isValid ? '1px solid red' : '',
     };
-    
+
     const className = '';
-    
     return (
         <div className='form-field'>
             <label htmlFor={label}>{label}</label>
             <input
                 onChange={onChange}
-                value={value}
+                value={props.value === null ? '' : props.value}
                 disabled={readOnly}
                 style={{ ...defaultStyle, ...style }}
                 type="text" />

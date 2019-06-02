@@ -28,18 +28,18 @@ test('Should get options via props', () => {
 })
 
 test('Should register an event on mount', () => {
-    expect(Object.keys(localEvent.getEvents('ResetSelectedValue')).length).toEqual(1);
+    expect(Object.keys(localEvent.getEvents('ResetCurrentSelection')).length).toEqual(1);
 })
 
 test('Should unregister an event on unmount', () => {
     wrapper.unmount();
-    expect(Object.keys(localEvent.getEvents('ResetSelectedValue')).length).toEqual(0);
+    expect(Object.keys(localEvent.getEvents('ResetCurrentSelection')).length).toEqual(0);
 })
 
-test('Should trigger onChange method on ResetSelectedValue event', (done) => {
+test('Should trigger onChange method on ResetCurrentSelection event', (done) => {
     wrapper = mount(<SelectField options={options} onChange={() => { }} event={localEvent} template={select2} />);
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
-    localEvent.emit('ResetSelectedValue', select2.fieldName);
+    localEvent.emit('ResetCurrentSelection', select2.fieldName);
     setTimeout(() => {
         expect(spy).toHaveBeenCalled();
         done();

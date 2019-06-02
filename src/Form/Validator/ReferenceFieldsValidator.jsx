@@ -28,7 +28,7 @@ const ReferenceFieldsValidator = (Component) => {
             }
           })
         })
-        this.setState({ readOnly: !areAllReferenceFieldsValid })
+        return areAllReferenceFieldsValid;
       }
     }
 
@@ -40,17 +40,26 @@ const ReferenceFieldsValidator = (Component) => {
     }
 
     componentWillMount() {
-      this.validateReferenceFields(this.state.validFields);
-      this.event.on(`onChange:${this.onChangeEventKey}`, (state, template) => {
+      let areAllReferenceFieldsValid = this.validateReferenceFields(this.state.validFields);
+      if (typeof areAllReferenceFieldsValid === 'boolean') this.setState({ readOnly: !areAllReferenceFieldsValid });
+      this.event.on(`onChange:${this.onChangeEventKey}`, (state, template, skipTriggeringEvent = false) => {
+        if (skipTriggeringEvent) return;
         const { fieldName } = template;
         const { value } = state;
         const validFields = { ...this.state.validFields };
         if ([fieldName] in validFields) validFields[fieldName] = value;
-        this.setState({ validFields }, () => this.validateReferenceFields(validFields));
+        let areAllReferenceFieldsValid = this.validateReferenceFields(validFields);
+        if (areAllReferenceFieldsValid === false && this.props.template.clearIfReferenceInvalid) this.event.emit('ResetSelectedValue', this.props.template.fieldName);
+        this.setState({
+          validFields,
+          readOnly: typeof areAllReferenceFieldsValid === 'boolean'
+            ? !areAllReferenceFieldsValid
+            : this.state.areAllReferenceFieldsValid
+        });
       })
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
       this.event.off(`onChange:${this.onChangeEventKey}`);
     }
 
