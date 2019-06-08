@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
+import makeid from './Form/RandomStringGen';
 
 const templates = [
   {
@@ -30,8 +31,8 @@ const templates = [
   }, {
     fieldType: 'text',
     fieldName: 'address',
-    label: 'Address', 
-    referenceFields: ['age','name'], /* support more than one reference fields check */
+    label: 'Address',
+    referenceFields: ['age', 'name'], /* support more than one reference fields check */
     validation: {
       minLength: 3,
       maxLength: 10,
@@ -162,6 +163,216 @@ const formData = {
   icecream: ['apple', 'watermelon']
 }
 
+const theme = [
+  {
+    fieldName: "fieldName1",
+    groupId: "groupId1",
+    className: "fieldName1-class",
+    subGroup: [
+      {
+        fieldName: "fieldName3",
+        className: "fieldName3-class",
+      },
+      {
+        fieldName: "fieldName4",
+        className: "fieldName4-class",
+      }
+    ]
+  },
+  {
+    fieldName: "fieldName2",
+    groupId: "groupId1",
+    className: "fieldName2-class",
+    subGroup: [
+      {
+        fieldName: "fieldName5",
+        className: "fieldName5-class",
+      },
+      {
+        fieldName: "fieldName6",
+        className: "fieldName6-class",
+        subGroup: [
+          {
+            fieldName: "fieldName7",
+            className: "fieldName7-class",
+          },
+        ]
+      }
+    ]
+  },
+  {
+    fieldName: "fieldName12",
+    className: "fieldName12-class",
+    subGroup: [
+      {
+        fieldName: "fieldName15",
+        className: "fieldName15-class",
+      },
+      {
+        fieldName: "fieldName16",
+        className: "fieldName16-class",
+        subGroup: [
+          {
+            fieldName: "fieldName17",
+            className: "fieldName17-class",
+            subGroup: [
+              {
+                fieldName: "fieldName171",
+                className: "fieldName171-class",
+              },
+            ]
+          },
+        ]
+      }
+    ]
+  },
+  {
+    fieldName: "fieldName111",
+    groupId: "groupId111",
+    className: "fieldName111-class",
+    subGroup: [
+      {
+        fieldName: "fieldName311",
+        className: "fieldName311-class",
+      },
+      {
+        fieldName: "fieldName411",
+        className: "fieldName411-class",
+      }
+    ]
+  },
+  {
+    fieldName: "fieldName211",
+    groupId: "groupId111",
+    className: "fieldName211-class",
+    subGroup: [
+      {
+        fieldName: "fieldName511",
+        className: "fieldName511-class",
+      },
+      {
+        fieldName: "fieldName611",
+        className: "fieldName611-class",
+        subGroup: [
+          {
+            fieldName: "fieldName711",
+            className: "fieldName711-class",
+          },
+        ]
+      }
+    ]
+  }, {
+    fieldName: "fieldName2111",
+    groupId: "groupId111",
+    className: "fieldName2111-class",
+    subGroup: [
+      {
+        fieldName: "fieldName5111",
+        className: "fieldName5111-class",
+      },
+      {
+        fieldName: "fieldName6111",
+        className: "fieldName6111-class",
+        subGroup: [
+          {
+            fieldName: "fieldName7111",
+            className: "fieldName7111-class",
+          },
+        ]
+      }
+    ]
+  },
+]
+
+const createElements = (theme, initialComponent, fieldContent) => {
+  const localGroup = {};
+  const renderFields = (fields, parent, isSubGroup = false) => {
+    let children = [];
+    for (let i = 0; i < fields.length; i++) {
+      const current = fields[i];
+      const { groupId = null, className = '', fieldName } = current;
+      if (groupId) {
+        if (!localGroup[groupId]) {
+          localGroup[groupId] = React.cloneElement(
+            <div></div>, {
+              className: groupId,
+              key: makeid()
+            })
+        }
+      }
+      const content = (fieldContent && fieldContent(fieldName)) || null;
+      const currentField = React.cloneElement(
+        <div></div>, {
+          className,
+          children: content,
+          key: makeid()
+        });
+
+      if (current.subGroup && current.subGroup.length) {
+        const subGroup = renderFields(current.subGroup, currentField, true);
+        if (localGroup[groupId]) {
+          let localChildren = [];
+          if (localGroup[groupId].props
+            && localGroup[groupId].props.children
+            && localGroup[groupId].props.children.length) {
+            localChildren = [...localGroup[groupId].props.children, subGroup]
+          } else if (localGroup[groupId].props && localGroup[groupId].props.children) {
+            localChildren = [localGroup[groupId].props.children, subGroup]
+          } else {
+            localChildren = subGroup
+          }
+          localGroup[groupId] = React.cloneElement(
+            localGroup[groupId], {
+              children: localChildren,
+              key: makeid()
+            });
+        } else {
+          children.push(React.cloneElement(
+            <React.Fragment></React.Fragment>, {
+              children: subGroup,
+              key: makeid()
+            }));
+        }
+      } else {
+        if (localGroup[groupId]) {
+          localGroup[groupId] = React.cloneElement(localGroup[groupId], {
+            children: [...localGroup[groupId].props.children,
+            currentField.props.children],
+            key: makeid()
+          });
+        } else {
+          children.push(currentField);
+        }
+      }
+    }
+
+    let parentProps = [];
+    if (parent.props) {
+      if (parent.props.children && parent.props.children.length) {
+        parentProps = parent.props.children;
+      } else {
+        parentProps = [parent.props.children];
+      }
+    }
+    if (Object.keys(localGroup).length) {
+      const subChildren = !isSubGroup
+        ? Object.keys(localGroup).reduce((acc, next) => { return [...acc, localGroup[next]] }, [])
+        : [];
+      children = [
+        React.cloneElement(
+          <React.Fragment></React.Fragment>, {
+            children: [...children], key: makeid()
+          }),
+        ...parentProps,
+        ...subChildren
+      ]
+    };
+
+    return React.cloneElement(parent, { children: children, key: makeid() });
+  }
+  return renderFields(theme, initialComponent);
+}
+
 const overrideOptions = () => {
   return {
     suburb: (value) => {
@@ -178,11 +389,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Form
-          /* pre-defined objects for generating custom urls */
+        <div>
+          {createElements(theme, React.cloneElement(<div></div>), (field) => {
+            return <span>hello</span>
+          })}
+        </div>
+        {/* <Form
           overrideOptions={overrideOptions}
           templates={templates}
-          formData={formData} />
+          formData={formData} /> */}
       </div>
     );
   }

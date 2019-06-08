@@ -5,9 +5,10 @@ const TextField = props => {
         readOnly,
         style = {},
         onChange,
-        classNames = '',
+        className = '',
         label = '',
         isValid,
+        template,
     } = props;
 
     const defaultStyle = {
@@ -15,9 +16,8 @@ const TextField = props => {
         border: !isValid ? '1px solid red' : '',
     };
 
-    const className = '';
     return (
-        <div className='form-field'>
+        <div id={template && template.fieldName} className='form-field'>
             <label htmlFor={label}>{label}</label>
             <input
                 onChange={onChange}

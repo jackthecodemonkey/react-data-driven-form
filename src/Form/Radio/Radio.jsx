@@ -23,9 +23,11 @@ class RadioComponent extends React.Component {
 
     render() {
         return (
-            <RadioGroup onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
-                {this.renderOptions()}
-            </RadioGroup>
+            <div className="form-field">
+                <RadioGroup onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
+                    {this.renderOptions()}
+                </RadioGroup>
+            </div>
         );
     }
 }

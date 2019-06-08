@@ -24,25 +24,27 @@ class Checkbox extends React.Component {
     getOptions() {
         return this.props.options.map(option => {
             return (
-                <label key={option.label}>
-                    <input
-                        disabled={this.props.readOnly}
-                        onClick={this.handleClick}
-                        checked={(this.props.value || []).includes(option.value)}
-                        type="checkbox"
-                        name={option.value}
-                        value={option.value} />
-                    {option.label}
-                </label>
+                <div>
+                    <label key={option.label}>
+                        <input
+                            disabled={this.props.readOnly}
+                            onClick={this.handleClick}
+                            checked={(this.props.value || []).includes(option.value)}
+                            type="checkbox"
+                            name={option.value}
+                            value={option.value} />
+                        {option.label}
+                    </label>
+                </div>
             );
         })
     }
 
     render() {
         return (
-            <div>
+            <div className="form-field">
                 {this.getOptions()}
-                { !this.props.isValid && <div>Invalid field</div> }
+                {!this.props.isValid && <div>Invalid field</div>}
             </div>
         );
     }

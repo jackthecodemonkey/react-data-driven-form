@@ -39,7 +39,7 @@ class SelectField extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="form-field">
                 <span>{!this.props.isValid && <span>Invalid field</span>}</span>
                 <Select
                     isLoading={!this.props.readOnly && this.props.loadingOptions}

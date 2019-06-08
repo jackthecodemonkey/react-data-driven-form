@@ -35,9 +35,9 @@ const ConditionalFieldsListener = (Component) => {
 
         render() {
             return (
-                <div>
+                <React.Fragment>
                     {this.state.show && <Component {...this.props} />}
-                </div>
+                </React.Fragment>
             );
         }
     }

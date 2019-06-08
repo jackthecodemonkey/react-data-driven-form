@@ -8,10 +8,10 @@ const ConditionalFieldsNotifier = (Component, conditionalFields) => {
 
         render() {
             return (
-                <div>
+                <React.Fragment>
                     <Component {...this.props} />
                     {conditionalFields}
-                </div>
+                </React.Fragment>
             );
         }
     }
