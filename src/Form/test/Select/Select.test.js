@@ -3,7 +3,6 @@ import { shallow, mount } from 'enzyme';
 import event from '../../event';
 import SelectField from '../../Select';
 import { select2 } from '../template/mockTemplate';
-import sinon from 'sinon';
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
