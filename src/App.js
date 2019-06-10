@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
 import CreateElements from './Form/LayoutGen';
-import makeid from './Form/RandomStringGen';
-import theme from './Form/test/template/mockLayout';
+import Theme from './Form/LayoutGen/models/Theme';
+import mockTheme from './Form/test/template/mockLayout';
 
 const templates = [
   {
@@ -181,9 +181,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          {CreateElements(theme, React.cloneElement(<div></div>), (field) => {
-            return <span key={makeid()}>hello</span>
-          })}
+        {
+          CreateElements(new Theme(mockTheme), (field) => {
+            return <span>Hello</span>
+          })
+        }
         {/* <Form
           overrideOptions={overrideOptions}
           templates={templates}
