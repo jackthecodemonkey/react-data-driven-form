@@ -9,7 +9,7 @@ class RadioComponent extends React.Component {
 
     renderOptions() {
         return this.props.options.map(option => {
-            return (<label> <Radio disabled={this.props.readOnly} value={option.value} />{option.label}</label>)
+            return (<label key={option.label}> <Radio disabled={this.props.readOnly} value={option.value} />{option.label}</label>)
         })
     }
 

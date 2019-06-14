@@ -24,11 +24,11 @@ class Checkbox extends React.Component {
     getOptions() {
         return this.props.options.map(option => {
             return (
-                <div>
-                    <label key={option.label}>
+                <div key={option.value}>
+                    <label>
                         <input
                             disabled={this.props.readOnly}
-                            onClick={this.handleClick}
+                            onChange={this.handleClick}
                             checked={(this.props.value || []).includes(option.value)}
                             type="checkbox"
                             name={option.value}

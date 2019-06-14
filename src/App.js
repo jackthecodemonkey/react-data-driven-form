@@ -19,30 +19,6 @@ const templates = [
       required: true,
     },
   }, {
-    fieldType: 'text',
-    fieldName: 'age',
-    label: 'Age',
-    clearIfReferenceInvalid: true,
-    referenceFields: ['name'],
-    validation: {
-      minLength: 3,
-      maxLength: 10,
-      regexp: /^\d*$/,
-      required: true,
-    }
-  }, {
-    fieldType: 'text',
-    fieldName: 'address',
-    label: 'Address',
-    referenceFields: ['age', 'name'], /* support more than one reference fields check */
-    validation: {
-      minLength: 3,
-      maxLength: 10,
-      regexp: /^\d*$/,
-      required: true,
-    }
-  },
-  {
     fieldType: 'radio',
     fieldName: 'fruit',
     label: 'Fruit',
@@ -123,44 +99,11 @@ const templates = [
       required: true,
     }
   }
-  , {
-    fieldType: 'select',
-    fieldName: 'suburb',
-    label: 'Suburb',
-    referenceFields: ['state'],
-    options: [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ],
-    url: '/tesAPI/{value}/',
-    fetchByRefAsync: true,
-    refSelector: 'state',
-    validation: {
-      required: true,
-      // noValidateOnMount: true,
-    }
-  },
-  {
-    fieldType: 'select',
-    fieldName: 'country',
-    label: 'Country',
-    referenceFields: ['suburb'],
-    refSelector: ['suburb'],
-    url: '/country/{value}/',
-    fetchByRefAsync: true,
-    validation: {
-      required: true,
-    }
-  }
 ]
 
 const formData = {
   name: 'Jack',
-  age: 'Age',
   state: 'vanilla',
-  suburb: 'strawberry',
-  country: 'chocolate',
   fruit: 'apple',
   icecream: ['apple', 'watermelon']
 }
@@ -181,15 +124,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {
+        {/* {
           CreateElements(new Theme(mockTheme), (field) => {
             return <span>Hello</span>
           })
-        }
-        {/* <Form
+        } */}
+        <Form
           overrideOptions={overrideOptions}
           templates={templates}
-          formData={formData} /> */}
+          formData={formData} />
       </div>
     );
   }

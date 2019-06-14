@@ -44,6 +44,7 @@ class Form extends React.Component {
 
   getFieldComponent(Field, template) {
     return <Field
+      key={template.fieldName}
       event={this.event}
       referenceValidators={ReferenceValidator(template.referenceFields, this.props.templates)}
       validator={ValidatorSelector(template)}
