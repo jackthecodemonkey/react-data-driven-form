@@ -81,14 +81,21 @@ class Form extends React.Component {
   }
 
   initializeFields() {
+    const hasTheme = !!this.props.theme;
+    this.fieldsWithLayout = {};
     this.fields = this.props.templates.map(template => {
+      if(hasTheme) template.hasTheme = true;
       let Field = this.buildComponent(template);
       if (template.conditional) {
         const conditionalFields = template.fields.map(field => this.buildComponent(field));
         Field = this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields), template);
       }
+      this.fieldsWithLayout[template.fieldName] = Field;
       return Field;
     })
+    if(hasTheme){
+      this.fields = this.props.theme(this.fieldsWithLayout)
+    }
   }
 
   render() {

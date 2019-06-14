@@ -2,9 +2,73 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
-import CreateElements from './Form/LayoutGen';
-import Theme from './Form/LayoutGen/models/Theme';
-import mockTheme from './Form/test/template/mockLayout';
+import { CreateElementsFactory } from './Form/LayoutGen';
+
+const layout = [
+  {
+    groupId: 'wrapper',
+    className: 'wrapper-class',
+    style: {
+      width: '100%',
+      height: '100%',
+    },
+    subGroup: [
+      {
+        groupId: 'sub-groupId-1',
+        className: 'sub-groupId-1',
+        subGroup: [
+          {
+            field: 'name',
+            className: 'name',
+          },
+          {
+            field: 'age',
+            className: 'age',
+            style: {
+              fontSize: '14px',
+            }
+          },
+          {
+            field: 'address',
+            className: 'address',
+          }
+        ]
+      },
+      {
+        groupId: 'sub-groupId-2',
+        className: 'sub-groupId-2',
+        subGroup: [
+          {
+            field: 'fruit',
+            className: 'fruit',
+          },
+          {
+            field: 'icecream',
+            className: 'icecream',
+          },
+        ]
+      },
+      {
+        groupId: 'sub-groupId-3',
+        className: 'sub-groupId-3',
+        subGroup: [
+          {
+            field: 'state',
+            className: 'state',
+          },
+          {
+            field: 'suburb',
+            className: 'suburb',
+          },
+          {
+            field: 'country',
+            className: 'country',
+          }
+        ]
+      }
+    ],
+  }
+]
 
 const templates = [
   {
@@ -19,6 +83,30 @@ const templates = [
       required: true,
     },
   }, {
+    fieldType: 'text',
+    fieldName: 'age',
+    label: 'Age',
+    clearIfReferenceInvalid: true,
+    referenceFields: ['name'],
+    validation: {
+      minLength: 3,
+      maxLength: 10,
+      regexp: /^\d*$/,
+      required: true,
+    }
+  }, {
+    fieldType: 'text',
+    fieldName: 'address',
+    label: 'Address',
+    referenceFields: ['age', 'name'], /* support more than one reference fields check */
+    validation: {
+      minLength: 3,
+      maxLength: 10,
+      regexp: /^\d*$/,
+      required: true,
+    }
+  },
+  {
     fieldType: 'radio',
     fieldName: 'fruit',
     label: 'Fruit',
@@ -99,11 +187,44 @@ const templates = [
       required: true,
     }
   }
+  , {
+    fieldType: 'select',
+    fieldName: 'suburb',
+    label: 'Suburb',
+    referenceFields: ['state'],
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ],
+    url: '/tesAPI/{value}/',
+    fetchByRefAsync: true,
+    refSelector: 'state',
+    validation: {
+      required: true,
+      // noValidateOnMount: true,
+    }
+  },
+  {
+    fieldType: 'select',
+    fieldName: 'country',
+    label: 'Country',
+    referenceFields: ['suburb'],
+    refSelector: ['suburb'],
+    url: '/country/{value}/',
+    fetchByRefAsync: true,
+    validation: {
+      required: true,
+    }
+  }
 ]
 
 const formData = {
   name: 'Jack',
+  age: 'Age',
   state: 'vanilla',
+  suburb: 'strawberry',
+  country: 'chocolate',
   fruit: 'apple',
   icecream: ['apple', 'watermelon']
 }
@@ -119,17 +240,14 @@ const overrideOptions = () => {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.layoutTheme = CreateElementsFactory(layout)
   }
 
   render() {
     return (
       <div className="App">
-        {/* {
-          CreateElements(new Theme(mockTheme), (field) => {
-            return <span>Hello</span>
-          })
-        } */}
         <Form
+          theme={this.layoutTheme}
           overrideOptions={overrideOptions}
           templates={templates}
           formData={formData} />

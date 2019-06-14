@@ -1,3 +1,16 @@
+
+import React from 'react';
+export const templates = {
+    "sub-field-0": <span>Hello</span>,
+    "sub-field-0-1": <span>Hello</span>,
+    "sub-field-1-1-1": <span>Hello</span>,
+    "sub-field-1-1-11-1-1": <span>Hello</span>,
+    "sub-field-1-1-11-1-1-1": <span>Hello</span>,
+    "sub-field-2-1": <span>Hello</span>,
+    "sub-field-2": <span>Hello</span>,
+    "sub-field-3": <span>Hello</span>,
+    "sub-field-3-1": <span>Hello</span>,
+};
 const theme = [
     {
         groupId: 'groupId0',

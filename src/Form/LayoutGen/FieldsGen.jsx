@@ -5,7 +5,7 @@ import GroupComponent from './Group';
 import Field from './models/Field';
 import Group from './models/Group';
 
-const GetFields = (fields, getContent) => {
+const GetFields = (fields, templates) => {
     let children = [];
     for (let i = 0; i < fields.length; i++) {
         const field = fields[i];
@@ -14,11 +14,11 @@ const GetFields = (fields, getContent) => {
                 className: field.className,
                 style: field.style,
                 key: makeid(),
-                children: GroupComponent(field, getContent)
+                children: GroupComponent(field, templates)
             });
             children.push(nextGroup)
         } else if (field instanceof Field) {
-            children.push(FieldComponent(field, getContent))
+            children.push(FieldComponent(field, templates))
         }
     }
     return children;

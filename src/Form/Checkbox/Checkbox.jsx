@@ -1,4 +1,5 @@
 import React from 'react';
+import FieldWrapper from '../Common/FieldWrapper';
 
 class Checkbox extends React.Component {
     constructor(props) {
@@ -42,11 +43,11 @@ class Checkbox extends React.Component {
 
     render() {
         return (
-            <div className="form-field">
+            <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
                 {this.getOptions()}
                 {!this.props.isValid && <div>Invalid field</div>}
-            </div>
-        );
+            </FieldWrapper>
+        )
     }
 }
 

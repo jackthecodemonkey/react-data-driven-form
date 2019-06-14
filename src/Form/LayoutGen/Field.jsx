@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-const Field = (field, getContent) => {
+const Field = (field, templates) => {
     return React.cloneElement(<div></div>, {
         className: field.className,
         style: field.style,
-        children: getContent && getContent(field.field),
+        children: templates && templates[field.field],
         key: field.className,
     });
 }

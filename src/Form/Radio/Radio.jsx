@@ -1,5 +1,6 @@
 import React from 'react';
 import { RadioGroup, Radio } from 'react-radio-group';
+import FieldWrapper from '../Common/FieldWrapper';
 
 class RadioComponent extends React.Component {
     constructor(props) {
@@ -23,11 +24,11 @@ class RadioComponent extends React.Component {
 
     render() {
         return (
-            <div className="form-field">
-                <RadioGroup onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
+            <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
+              <RadioGroup onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
                     {this.renderOptions()}
-                </RadioGroup>
-            </div>
+              </RadioGroup>
+            </FieldWrapper>
         );
     }
 }

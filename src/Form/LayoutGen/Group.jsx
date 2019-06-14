@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GetFields from './FieldsGen';
 
-const Group = (group, getContent) => {
+const Group = (group, templates) => {
     const {
         groupId,
         className,
@@ -11,7 +11,7 @@ const Group = (group, getContent) => {
     return React.cloneElement(<div></div>, {
         className,
         style,
-        children: [...GetFields(subGroup, getContent)]
+        children: [...GetFields(subGroup, templates)]
     });
 }
 

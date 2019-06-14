@@ -1,18 +1,14 @@
 import CreateElements from '../LayoutGen';
 import React from 'react';
-import makeid from '../RandomStringGen';
-import theme from './template/mockLayout';
-import Theme from '../LayoutGen/models/Theme'; 
-import { shallow, mount } from 'enzyme';
+import theme, { templates } from './template/mockLayout';
+import { shallow } from 'enzyme';
 
 let wrapper = null;
 
 beforeEach(() => {
     wrapper = shallow(<div className="App">
         {
-          CreateElements(new Theme(theme), (field) => {
-            return <span>Hello</span>
-          })
+            CreateElements(theme, templates)
         }
     </div>);
 })

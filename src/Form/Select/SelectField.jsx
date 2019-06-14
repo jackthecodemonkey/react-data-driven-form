@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import makeid from '../RandomStringGen';
+import FieldWrapper from '../Common/FieldWrapper';
 
 const getValueObject = (value, options) => options.find(option => option.value === value);
 
@@ -39,7 +40,7 @@ class SelectField extends React.Component {
 
     render() {
         return (
-            <div className="form-field">
+            <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
                 <span>{!this.props.isValid && <span>Invalid field</span>}</span>
                 <Select
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
@@ -47,7 +48,7 @@ class SelectField extends React.Component {
                     onChange={this.onChange}
                     value={getValue(this.props.value, this.props.options)}
                     options={this.props.options} />
-            </div>
+            </FieldWrapper>
         );
     }
 }

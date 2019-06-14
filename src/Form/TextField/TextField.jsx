@@ -1,4 +1,5 @@
 import React from 'react';
+import FieldWrapper from '../Common/FieldWrapper';
 
 const TextField = props => {
     const {
@@ -17,7 +18,7 @@ const TextField = props => {
     };
 
     return (
-        <div id={template && template.fieldName} className='form-field'>
+        <FieldWrapper shouldUseFragment={template && template.hasTheme}>
             <label htmlFor={label}>{label}</label>
             <input
                 onChange={onChange}
@@ -25,7 +26,7 @@ const TextField = props => {
                 disabled={readOnly}
                 style={{ ...defaultStyle, ...style }}
                 type="text" />
-        </div>
+        </FieldWrapper>
     );
 }
 
