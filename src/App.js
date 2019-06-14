@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
-import { CreateElementsFactory } from './Form/LayoutGen';
 
 const layout = [
   {
@@ -39,8 +38,28 @@ const layout = [
         className: 'sub-groupId-2',
         subGroup: [
           {
-            field: 'fruit',
-            className: 'fruit',
+            groupId: 'sub-groupId-111',
+            className: 'sub-groupId-111',
+            subGroup: [
+              {
+                field: 'fruit',
+                className: 'fruit',
+              },
+              {
+                groupId: 'sub-groupId-3333',
+                className: 'sub-groupId-3333',
+                subGroup: [
+                  {
+                    field: 'billingAddress',
+                    className: 'billingAddress',
+                  },
+                  {
+                    field: 'shippingAddress',
+                    className: 'shippingAddress',
+                  },
+                ]
+              }
+            ]
           },
           {
             field: 'icecream',
@@ -240,14 +259,13 @@ const overrideOptions = () => {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.layoutTheme = CreateElementsFactory(layout)
   }
 
   render() {
     return (
       <div className="App">
         <Form
-          theme={this.layoutTheme}
+          theme={layout}
           overrideOptions={overrideOptions}
           templates={templates}
           formData={formData} />

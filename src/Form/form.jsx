@@ -18,13 +18,15 @@ import {
 } from './ConditionalFields';
 
 import events from './event';
-
+import { CreateElementsFactory } from './LayoutGen';
+import Theme from './LayoutGen/models/Theme';
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.fields = null;
     this.event = events();
+    this.layoutTheme = CreateElementsFactory(this.props.theme);
     this.state = {
       formData: this.props.formData,
     }
@@ -82,19 +84,27 @@ class Form extends React.Component {
 
   initializeFields() {
     const hasTheme = !!this.props.theme;
+    const theme = new Theme(this.props.theme);
     this.fieldsWithLayout = {};
     this.fields = this.props.templates.map(template => {
-      if(hasTheme) template.hasTheme = true;
+      if (hasTheme) template.hasTheme = true;
       let Field = this.buildComponent(template);
       if (template.conditional) {
-        const conditionalFields = template.fields.map(field => this.buildComponent(field));
-        Field = this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields), template);
+        const fields = template.fields.map(field => field.fieldName);
+        const everyConditionalFieldsInTheme = theme.FindFields(fields);
+        const conditionalFields = template.fields.map(field => {
+          if (hasTheme) field.hasTheme = true;
+          const conditionalField = this.buildComponent(field);
+          if (everyConditionalFieldsInTheme) this.fieldsWithLayout[field.fieldName] = conditionalField;
+          return conditionalField
+        });
+        Field = this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields, everyConditionalFieldsInTheme), template);
       }
       this.fieldsWithLayout[template.fieldName] = Field;
       return Field;
     })
-    if(hasTheme){
-      this.fields = this.props.theme(this.fieldsWithLayout)
+    if (hasTheme) {
+      this.fields = this.layoutTheme(this.fieldsWithLayout)
     }
   }
 

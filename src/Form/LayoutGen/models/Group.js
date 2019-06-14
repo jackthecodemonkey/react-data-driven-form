@@ -14,6 +14,15 @@ class Group {
             })
             : [];
     }
+
+    FindField(field) {
+        let found = false;
+        this.subGroup.forEach((local)=>{
+            const hasField = local.FindField(field);
+            if(hasField) found = true;
+        })
+        return found;
+    }
 }
 
 export default Group;

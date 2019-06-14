@@ -4,6 +4,10 @@ class Field {
         this.className = localField.className || null;
         this.style = localField.style || {};
     }
+
+    FindField(field) {
+        return this.field === field;
+    }
 }
 
 export default Field;

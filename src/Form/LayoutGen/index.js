@@ -15,7 +15,5 @@ const CreateElements = (theme, templates) => {
     return CreateElementsFactory(new Theme(theme))(templates);
 }
 
-
-
 export { CreateElementsFactory };
 export default CreateElements;
