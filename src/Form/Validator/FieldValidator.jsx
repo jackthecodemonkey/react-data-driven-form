@@ -7,15 +7,15 @@ const FieldValidator = (Component) => {
       this.onChange = this.onChange.bind(this);
       this.forceResetValue = this.forceResetValue.bind(this);
       this.validation = this.props.template && this.props.template.validation;
-      let initialValue = this.props.value;
-      if (!initialValue && this.props.formData && this.props.template && this.props.template.fieldName) {
-        initialValue = this.props.formData[this.props.template.fieldName];
+      this.initialValue = this.props.value;
+      if (!this.initialValue && this.props.formData && this.props.template && this.props.template.fieldName) {
+        this.initialValue = this.props.formData[this.props.template.fieldName];
       }
       this.state = {
         pristine: false,
         isDirty: false,
-        isValid: this.initializeValidity(initialValue),
-        value: initialValue,
+        isValid: this.initializeValidity(this.initialValue),
+        value: this.initialValue,
       }
     }
 
@@ -28,9 +28,20 @@ const FieldValidator = (Component) => {
     }
 
     updateState(value, e = null, userHasInteracted = false) {
+      let isDirty = false;
+      if (!this.state.pristine && userHasInteracted) {
+        this.initialValue = this.state.value;
+      }
+
+      if (!this.initialValue && value) {
+        isDirty = true;
+      } else {
+        isDirty = this.initialValue !== this.props.value && this.initialValue !== value;
+      }
+
       this.setState({
         pristine: userHasInteracted,
-        isDirty: this.props.value !== value,
+        isDirty,
         value,
         isValid: this.props.validator.validate(value),
       }, () => {
