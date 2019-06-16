@@ -3,6 +3,7 @@ import Group from './Group';
 
 class Theme {
     constructor(localTheme = {}) {
+        this.components = {};
         this.theme = Array.isArray(localTheme)
             ? localTheme.map(theme => {
                 return theme.groupId
@@ -10,6 +11,10 @@ class Theme {
                     : new Field(theme)
             })
             : [];
+    }
+    
+    AddComponent(field, component) {
+        this.components[field] = component;
     }
 
     FindField(field) {

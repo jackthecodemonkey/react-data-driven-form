@@ -26,7 +26,7 @@ class Form extends React.Component {
     super(props);
     this.fields = null;
     this.event = events();
-    this.layoutTheme = CreateElementsFactory(this.props.theme);
+    this.applyTheme = CreateElementsFactory(this.props.theme);
     this.state = {
       formData: this.props.formData,
     }
@@ -34,8 +34,8 @@ class Form extends React.Component {
 
   componentWillMount() {
     this.event.on('onChange', (state, { fieldName }) => {
-      // console.log(state);
-      // console.log(fieldName);
+      console.log(state);
+      console.log(fieldName);
     })
     this.initializeFields()
   }
@@ -83,29 +83,31 @@ class Form extends React.Component {
   }
 
   initializeFields() {
-    const hasTheme = !!this.props.theme;
     const theme = new Theme(this.props.theme);
-    this.fieldsWithLayout = {};
+    const hasTheme = !!this.props.theme;
     this.fields = this.props.templates.map(template => {
       if (hasTheme) template.hasTheme = true;
       let Field = this.buildComponent(template);
-      if (template.conditional) {
-        const fields = template.fields.map(field => field.fieldName);
-        const everyConditionalFieldsInTheme = theme.FindFields(fields);
-        const conditionalFields = template.fields.map(field => {
-          if (hasTheme) field.hasTheme = true;
-          const conditionalField = this.buildComponent(field);
-          if (everyConditionalFieldsInTheme) this.fieldsWithLayout[field.fieldName] = conditionalField;
-          return conditionalField
-        });
-        Field = this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields, everyConditionalFieldsInTheme), template);
-      }
-      this.fieldsWithLayout[template.fieldName] = Field;
+      /* If field template includes conditional show/hide, append those fields with the field */
+      if (template.conditional) Field = this.applyConditionalField(template, theme, Field);
+      theme.AddComponent(template.fieldName, Field);
       return Field;
     })
-    if (hasTheme) {
-      this.fields = this.layoutTheme(this.fieldsWithLayout)
-    }
+    if (hasTheme) this.fields = this.applyTheme(theme.components)
+  }
+
+  applyConditionalField(template, theme, Field) {
+    const fields = template.fields.map(field => field.fieldName);
+    const everyConditionalFieldsInTheme = theme.FindFields(fields);
+    const conditionalFields = template.fields.map(field => {
+      if (!!this.props.theme) field.hasTheme = true;
+      const conditionalField = this.buildComponent(field);
+      /* If theme contains every conditional fields, then we apply the theme, otherwise, we ignore the theme */
+      /* eg) if the field shows other fields A,B conditionally and the theme includes only a theme for A, then we don't apply theme for both */
+      if (everyConditionalFieldsInTheme) theme.AddComponent(field.fieldName, conditionalField);
+      return conditionalField
+    });
+    return this.getFieldComponent(ConditionalFieldsNotifier(Field, conditionalFields, everyConditionalFieldsInTheme), template);
   }
 
   render() {
