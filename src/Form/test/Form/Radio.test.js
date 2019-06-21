@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { textField1 } from '../template/mockTemplate';
+import { mount, shallow } from 'enzyme';
+import { radio1 } from '../template/mockTemplate';
 import Form from '../../../Form';
 
-let template = [textField1]
+let template = [radio1]
 let formData = {
-    name: 'Jack',
+    fruit: 'apple',
 }
 
 let wrapper = null;
@@ -38,9 +38,9 @@ test('Should render a FieldValidator', () => {
         .toEqual(1);
 })
 
-test('Should render a ResetValueNotifier', () => {
+test('Should render a OptionsChangeListener', () => {
     expect(wrapper
-        .find('ResetValueNotifierComponent')
+        .find('OptionsChangeListenerComponent')
         .length)
         .toEqual(1);
 })
@@ -52,9 +52,16 @@ test('Should render a ResetValueNotifier', () => {
         .toEqual(1);
 })
 
-test('Composed TextField', () => {
+test('Should render a ResetValueNotifier', () => {
     expect(wrapper
-        .find('TextField')
+        .find('ResetValueNotifierComponent')
+        .length)
+        .toEqual(1);
+})
+
+test('Composed RadioComponent', () => {
+    expect(wrapper
+        .find('RadioComponent')
         .length)
         .toEqual(1);
 })
@@ -67,34 +74,31 @@ test('Initial props on mount', () => {
         isValid,
         label,
         value,
-    } = wrapper.find('TextField').props();
+    } = wrapper.find('RadioComponent').props();
     expect(readOnly).toEqual(false);
     expect(pristine).toEqual(false);
     expect(isDirty).toEqual(false);
     expect(isValid).toEqual(true);
-    expect(label).toEqual('Name');
-    expect(value).toEqual('Jack');
+    expect(label).toEqual('Fruit');
+    expect(value).toEqual('apple');
 })
 
 test('After first interaction', () => {
-    wrapper
-        .find('input')
-        .simulate('change', { target: { value: 'Changed' } });
-
+    wrapper.find('RadioComponent').instance().handleChange('orange');
+    wrapper.update();
+ 
     const {
         isDirty,
         pristine,
-    } = wrapper.find('TextField').props()
+    } = wrapper.find('RadioComponent').props()
 
-    expect(isDirty).toEqual(true);
-    expect(pristine).toEqual(true);
+    expect(isDirty).toBe.true;
+    expect(pristine).toBe.true;
 
-    wrapper
-    .find('input')
-    .simulate('change', { target: { value: 'Jack' } });
-
-    expect(wrapper.find('TextField').props().isDirty).toEqual(false);
-    expect(wrapper.find('TextField').props().pristine).toEqual(true);
+    wrapper.find('RadioComponent').instance().handleChange('apple');
+    wrapper.update();
+    
+    expect(wrapper.find('RadioComponent').props().value).toEqual('apple');
+    expect(wrapper.find('RadioComponent').props().pristine).toEqual(true);
+    expect(wrapper.find('RadioComponent').props().isDirty).toEqual(false);
 });
-
-

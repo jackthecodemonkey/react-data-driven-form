@@ -60,6 +60,21 @@ const select1 = {
     }
   }
 
+  const radio1 = {
+      fieldType: 'radio',
+      fieldName: 'fruit',
+      label: 'Fruit',
+      referenceFields: [],
+      options: [
+        { value: 'apple', label: 'Apple' },
+        { value: 'orange', label: 'Orange' },
+        { value: 'watermelon', label: 'Watermelon' }
+      ],
+      validation: {
+        required: true,
+      }
+    };
+
 const templates = [
     {
       fieldType: 'text',
@@ -142,6 +157,7 @@ export {
     textField1,
     select1,
     select2,
+    radio1,
     inValidSelect1,
     inValidSelect2,
 }

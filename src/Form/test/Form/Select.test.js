@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { textField1 } from '../template/mockTemplate';
+import { mount, shallow } from 'enzyme';
+import { select1 } from '../template/mockTemplate';
 import Form from '../../../Form';
 
-let template = [textField1]
+let template = [select1]
 let formData = {
-    name: 'Jack',
+    state: 'vanilla',
 }
 
 let wrapper = null;
@@ -38,6 +38,13 @@ test('Should render a FieldValidator', () => {
         .toEqual(1);
 })
 
+test('Should render a OptionsChangeListener', () => {
+    expect(wrapper
+        .find('OptionsChangeListenerComponent')
+        .length)
+        .toEqual(1);
+})
+
 test('Should render a ResetValueNotifier', () => {
     expect(wrapper
         .find('ResetValueNotifierComponent')
@@ -54,7 +61,7 @@ test('Should render a ResetValueNotifier', () => {
 
 test('Composed TextField', () => {
     expect(wrapper
-        .find('TextField')
+        .find('SelectField')
         .length)
         .toEqual(1);
 })
@@ -67,34 +74,33 @@ test('Initial props on mount', () => {
         isValid,
         label,
         value,
-    } = wrapper.find('TextField').props();
+    } = wrapper.find('SelectField').props();
     expect(readOnly).toEqual(false);
     expect(pristine).toEqual(false);
     expect(isDirty).toEqual(false);
     expect(isValid).toEqual(true);
-    expect(label).toEqual('Name');
-    expect(value).toEqual('Jack');
+    expect(label).toEqual('State');
+    expect(value).toEqual('vanilla');
 })
 
 test('After first interaction', () => {
-    wrapper
-        .find('input')
-        .simulate('change', { target: { value: 'Changed' } });
-
+    wrapper.find('SelectField').instance().onChange({value: "strawberry", label: "Strawberry"});
+    wrapper.update();
+ 
     const {
         isDirty,
         pristine,
-    } = wrapper.find('TextField').props()
+    } = wrapper.find('SelectField').props()
 
     expect(isDirty).toEqual(true);
     expect(pristine).toEqual(true);
 
-    wrapper
-    .find('input')
-    .simulate('change', { target: { value: 'Jack' } });
+    wrapper.find('SelectField').instance().onChange({ value: 'vanilla', label: 'Vanilla' });
+    wrapper.update();
 
-    expect(wrapper.find('TextField').props().isDirty).toEqual(false);
-    expect(wrapper.find('TextField').props().pristine).toEqual(true);
+    expect(wrapper.find('SelectField').props().value).toEqual('vanilla');
+    expect(wrapper.find('SelectField').props().isDirty).toEqual(false);
+    expect(wrapper.find('SelectField').props().pristine).toEqual(true);
 });
 
 
