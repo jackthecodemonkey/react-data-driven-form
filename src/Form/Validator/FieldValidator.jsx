@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 const FieldValidator = (Component) => {
   return class FieldValidatorComponent extends React.Component {
@@ -27,21 +28,39 @@ const FieldValidator = (Component) => {
       return !this.validation.noValidateOnMount ? this.props.validator.validate(initialValue) : true;
     }
 
-    updateState(value, e = null, userHasInteracted = false) {
+    setInitialEmptyValueByFieldType() {
+      switch (this.props.template.fieldType) {
+        case 'checkbox':
+          return [];
+        default:
+          return '';
+      }
+    }
+
+    checkIfIsDirty(value = null, userHasInteracted = false) {
       let isDirty = false;
+      /* First interaction by user */
       if (!this.state.pristine && userHasInteracted) {
-        this.initialValue = this.state.value;
+        this.initialValue = this.state.value || this.setInitialEmptyValueByFieldType();
       }
 
       if (!this.initialValue && value) {
         isDirty = true;
-      } else {
+      }
+      /* Array type diff check */
+      if (Array.isArray(this.initialValue) && Array.isArray(value)) {
+        isDirty = _.xor(this.initialValue, value).length !== 0
+      } else /* string type */ {
         isDirty = this.initialValue !== this.props.value && this.initialValue !== value;
       }
 
+      return isDirty;
+    }
+
+    updateState(value, e = null, userHasInteracted = false) {
       this.setState({
         pristine: userHasInteracted,
-        isDirty,
+        isDirty: this.checkIfIsDirty(value, userHasInteracted),
         value,
         isValid: this.props.validator.validate(value),
       }, () => {

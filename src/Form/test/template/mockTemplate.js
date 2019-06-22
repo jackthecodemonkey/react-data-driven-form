@@ -75,6 +75,23 @@ const select1 = {
       }
     };
 
+    const checkbox1 =   {
+      fieldType: 'checkbox',
+      fieldName: 'icecream',
+      label: 'Ice cream',
+      referenceFields: [],
+      options: [
+        { value: 'apple', label: 'Apple' },
+        { value: 'orange', label: 'Orange' },
+        { value: 'watermelon', label: 'Watermelon' }
+      ],
+      validation: {
+        required: true,
+        maxSelect: 2,
+        minSelect: 1,
+      }
+    };
+
 const templates = [
     {
       fieldType: 'text',
@@ -158,6 +175,7 @@ export {
     select1,
     select2,
     radio1,
+    checkbox1,
     inValidSelect1,
     inValidSelect2,
 }

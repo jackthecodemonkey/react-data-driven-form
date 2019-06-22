@@ -175,22 +175,22 @@ const templates = [
       required: true,
     }
   },
-  // {
-  //   fieldType: 'checkbox',
-  //   fieldName: 'icecream',
-  //   label: 'Ice cream',
-  //   referenceFields: [],
-  //   options: [
-  //     { value: 'apple', label: 'Apple' },
-  //     { value: 'orange', label: 'Orange' },
-  //     { value: 'watermelon', label: 'Watermelon' }
-  //   ],
-  //   validation: {
-  //     required: true,
-  //     // maxSelect: 2,
-  //     // minSelect: 1,
-  //   }
-  // },
+  {
+    fieldType: 'checkbox',
+    fieldName: 'icecream',
+    label: 'Ice cream',
+    referenceFields: [],
+    options: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'orange', label: 'Orange' },
+      { value: 'watermelon', label: 'Watermelon' }
+    ],
+    validation: {
+      required: true,
+      // maxSelect: 2,
+      // minSelect: 1,
+    }
+  },
   {
     fieldType: 'select',
     fieldName: 'state',
