@@ -2,7 +2,7 @@ import React from 'react';
 import { RadioGroup, Radio } from 'react-radio-group';
 import FieldWrapper from '../Common/FieldWrapper';
 
-class RadioComponent extends React.Component {
+class RadioComponent extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);

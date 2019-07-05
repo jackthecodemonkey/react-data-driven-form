@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-const FieldValidator = (Component) => {
-  return class FieldValidatorComponent extends React.Component {
+const FieldValueContainer = (Component) => {
+  return class FieldValueContainerComponent extends React.Component {
     constructor(props) {
       super(props);
       this.onChange = this.onChange.bind(this);
@@ -25,7 +25,9 @@ const FieldValidator = (Component) => {
     }
 
     initializeValidity(initialValue) {
-      return !this.validation.noValidateOnMount ? this.props.validator.validate(initialValue) : true;
+      return !this.validation.noValidateOnMount
+        ? this.props.validator.validate(initialValue)
+        : true;
     }
 
     setInitialEmptyValueByFieldType() {
@@ -37,7 +39,7 @@ const FieldValidator = (Component) => {
       }
     }
 
-    checkIfIsDirty(value = null, userHasInteracted = false) {
+    checkIfDirty(value = null, userHasInteracted = false) {
       let isDirty = false;
       /* First interaction by user */
       if (!this.state.pristine && userHasInteracted) {
@@ -47,7 +49,9 @@ const FieldValidator = (Component) => {
       if (!this.initialValue && value) {
         isDirty = true;
       }
-      /* Array type diff check */
+
+      /* diff check */
+      /* Array type */
       if (Array.isArray(this.initialValue) && Array.isArray(value)) {
         isDirty = _.xor(this.initialValue, value).length !== 0
       } else /* string type */ {
@@ -59,8 +63,10 @@ const FieldValidator = (Component) => {
 
     updateState(value, e = null, userHasInteracted = false) {
       this.setState({
-        pristine: userHasInteracted,
-        isDirty: this.checkIfIsDirty(value, userHasInteracted),
+        pristine: this.state.pristine
+          ? true
+          : userHasInteracted,
+        isDirty: this.checkIfDirty(value, userHasInteracted),
         value,
         isValid: this.props.validator.validate(value),
       }, () => {
@@ -69,14 +75,15 @@ const FieldValidator = (Component) => {
       })
     }
 
-    onChange(e) {
+    onChange(e, triggeredByInteraction = true) {
       let value = null;
-      if (e && e.target) value = e.target.value;
-      else {
+      if (e && e.target) {
+        value = e.target.value;
+      } else {
         value = e;
         e = null;
       };
-      this.updateState(value, e, true);
+      this.updateState(value, e, triggeredByInteraction);
     }
 
     forceResetValue(newValue = null) {
@@ -110,4 +117,4 @@ const FieldValidator = (Component) => {
   }
 }
 
-export default FieldValidator;
+export default FieldValueContainer;

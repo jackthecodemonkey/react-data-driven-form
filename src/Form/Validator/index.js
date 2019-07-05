@@ -1,11 +1,11 @@
-import FieldValidator from './FieldValidator';
+import FieldValueContainer from './FieldValueContainer';
 import ReferenceFieldsValidator from './ReferenceFieldsValidator';
 import ValidatorSelector from './ValidatorSelector';
 import ReferenceValidator from './ReferenceValidator';
 import ResetValueNotifier from './ResetValueNotifier';
 
 export {
-    FieldValidator,
+    FieldValueContainer,
     ReferenceFieldsValidator,
     ValidatorSelector,
     ReferenceValidator,

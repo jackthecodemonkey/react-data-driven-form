@@ -1,7 +1,7 @@
 import React from 'react';
 import FieldWrapper from '../Common/FieldWrapper';
 
-class Checkbox extends React.Component {
+class Checkbox extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);

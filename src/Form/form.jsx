@@ -5,7 +5,7 @@ import TextField from './TextField';
 import Radio from './Radio';
 import Checkbox from './Checkbox';
 import {
-  FieldValidator,
+  FieldValueContainer,
   ReferenceFieldsValidator,
   ValidatorSelector,
   ReferenceValidator,
@@ -34,8 +34,6 @@ class Form extends React.Component {
 
   componentWillMount() {
     this.event.on('onChange', (state, { fieldName }) => {
-      console.log(state);
-      console.log(fieldName);
     })
     this.initializeFields()
   }
@@ -59,19 +57,19 @@ class Form extends React.Component {
     switch (template.fieldType) {
       case 'text':
       case 'textArea':
-        Field = ReferenceFieldsValidator(FieldValidator(ResetValueNotifier(TextField)));
+        Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextField)));
         break;
       case 'select':
         if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
           template.url = this.props.overrideOptions[template.fieldName];
         }
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(SelectField)))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(SelectField)))));
         break;
       case 'radio':
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(Radio)))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(Radio)))));
         break;
       case 'checkbox':
-        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValidator(ResetValueNotifier(Checkbox)))));
+        Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(Checkbox)))));
         break;
     }
 

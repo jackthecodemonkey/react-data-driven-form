@@ -11,7 +11,7 @@ const getValue = (value, options) => {
         : getValueObject(value, options);
 };
 
-class SelectField extends React.Component {
+class SelectField extends React.PureComponent {
     constructor(props) {
         super(props);
         this.ResetSelectedValueEventKey = makeid();
@@ -21,7 +21,7 @@ class SelectField extends React.Component {
     componentWillMount() {
         this.props.event.on(`ResetCurrentSelection:${this.ResetSelectedValueEventKey}`, fieldName => {
             if (fieldName === this.props.template.fieldName) {
-                this.onChange(null);
+                this.onChange(null, null, false);
             }
         })
     }
@@ -30,8 +30,8 @@ class SelectField extends React.Component {
         this.props.event.off(`ResetCurrentSelection:${this.ResetSelectedValueEventKey}`);
     }
 
-    onChange(value) {
-        this.props.onChange && this.props.onChange(value && value.value);
+    onChange(value, actions, triggeredByInteraction = true) {
+        this.props.onChange && this.props.onChange(value && value.value, triggeredByInteraction);
         if (this.props.event) {
             const fieldName = this.props.fieldName || this.props.template.fieldName;
             this.props.event.emit('OnReferenceSelectorOptionChanged', fieldName, value && value.value);

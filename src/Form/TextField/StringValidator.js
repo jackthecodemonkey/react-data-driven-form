@@ -9,8 +9,9 @@ class StringValidator {
         this.inValidFields = [];
     };
 
-    validate(string) {
+    validate(localString) {
         this.inValidFields = [];
+        const string = localString ? localString.toString() : localString;
         if (this.required && !string) this.inValidFields.push(rules.required);
         if (string && this.minLength && string.length < this.minLength) this.inValidFields.push(rules.minLength);
         if (string && this.maxLength && string.length > this.maxLength) this.inValidFields.push(rules.maxLength);

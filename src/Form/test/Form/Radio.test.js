@@ -31,9 +31,9 @@ test('Should render a ReferenceFieldsValidator', () => {
         .toEqual(1);
 })
 
-test('Should render a FieldValidator', () => {
+test('Should render a FieldValueContainer', () => {
     expect(wrapper
-        .find('FieldValidatorComponent')
+        .find('FieldValueContainerComponent')
         .length)
         .toEqual(1);
 })

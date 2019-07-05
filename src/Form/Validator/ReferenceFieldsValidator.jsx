@@ -15,7 +15,7 @@ const ReferenceFieldsValidator = (Component) => {
     }
 
     validateReferenceFields(formData) {
-      if (this.props.referenceValidators) {
+      if (Array.isArray(this.props.referenceValidators) && this.props.referenceValidators.length) {
         let areAllReferenceFieldsValid = true;
         this.props.referenceValidators.forEach(referenceField => {
           const {

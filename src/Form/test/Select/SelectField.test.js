@@ -40,7 +40,7 @@ test('Should trigger onChange method on ResetCurrentSelection event', (done) => 
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
     localEvent.emit('ResetCurrentSelection', select2.fieldName);
     setTimeout(() => {
-        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith(null, null, false);
         done();
     })
 })
