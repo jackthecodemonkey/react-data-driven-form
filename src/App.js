@@ -3,6 +3,93 @@ import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
 
+const AddressTemplate = [
+  {
+    fieldType: 'text',
+    fieldName: 'title',
+    label: 'Title',
+    referenceFields: [],
+    validation: {
+      maxLength: 20,
+      regexp: /^[0-9a-zA-Z]+$/,
+    },
+  }, {
+    fieldType: 'text',
+    fieldName: 'address1',
+    label: 'Address 1',
+    referenceFields: [],
+    validation: {
+      regexp: /^[0-9a-zA-Z]+$/,
+      noValidateOnMount: true,
+      required: true,
+    },
+  }, {
+    fieldType: 'text',
+    fieldName: 'address2',
+    label: 'Address 2',
+    referenceFields: [],
+    validation: {
+      regexp: /^[0-9a-zA-Z]+$/,
+      noValidateOnMount: true,
+      required: true,
+    },
+  }, {
+    fieldType: 'radio',
+    fieldName: 'mailing',
+    label: 'Would you like to get our emails ?',
+    referenceFields: [],
+    options: [
+      { value: 'no', label: 'No' },
+      { value: 'yes', label: 'Yes' }
+    ],
+    validation: {
+      required: true,
+    }
+  }, {
+    fieldType: 'select',
+    fieldName: 'requesttype',
+    label: 'Request Type',
+    referenceFields: [],
+    options: [
+      { value: 'studentfaul', label: 'Student Fault' },
+      { value: 'facultyfault', label: 'Faculty Fault' },
+      { value: 'stafuufault', label: 'Staff Fault' }
+    ],
+    validation: {
+      required: true,
+      noValidateOnMount: true,
+    }
+  }];
+
+const AddressLayout = [
+  {
+    groupId: 'wrapper',
+    className: 'wrapper-class',
+    subGroup: [
+      {
+        field: 'title',
+        className: 'title',
+      },
+      {
+        field: 'address1',
+        className: 'address1',
+      },
+      {
+        field: 'address2',
+        className: 'address2',
+      },
+      {
+        field: 'requesttype',
+        className: 'requesttype',
+      },
+      {
+        field: 'mailing',
+        className: 'mailing',
+      },
+    ]
+  }
+]
+
 const layout = [
   {
     groupId: 'wrapper',
@@ -114,7 +201,7 @@ const templates = [
       regexp: /^\d*$/,
       required: true,
     }
-  }, 
+  },
   {
     fieldType: 'text',
     fieldName: 'address',
@@ -240,14 +327,14 @@ const templates = [
 ]
 
 const formData = {
-  name: 'Jack',
-  age: 'Age',
-  state: 'vanilla',
-  suburb: 'strawberry',
-  country: 'chocolate',
-  fruit: 'apple',
-  address: 12,
-  icecream: ['apple', 'watermelon']
+  // name: 'Jack',
+  // age: 'Age',
+  // state: 'vanilla',
+  // suburb: 'strawberry',
+  // country: 'chocolate',
+  // fruit: 'apple',
+  // address: 12,
+  // icecream: ['apple', 'watermelon']
 }
 
 // const overrideOptions = () => {
@@ -267,9 +354,9 @@ class App extends Component {
     return (
       <div className="App">
         <Form
-          theme={layout}
+          theme={AddressLayout}
           // overrideOptions={overrideOptions}
-          templates={templates}
+          templates={AddressTemplate}
           formData={formData} />
       </div>
     );
