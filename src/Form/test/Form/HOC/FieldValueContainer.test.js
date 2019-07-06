@@ -44,7 +44,7 @@ test('Should call updateState method', () => {
     expect(spy).toHaveBeenCalled();
 })
 
-test('Should not call updateState method', () => {
+test('Should call updateState method with noValidateOnMount', () => {
     const TestComp = () => <div>Hello</div>;
     const FieldTestComp = FieldValueContainer(TestComp);
     const spy = jest.spyOn(FieldTestComp.prototype, 'updateState');
@@ -57,7 +57,7 @@ test('Should not call updateState method', () => {
             event={event}
             formData={formDataCopy}
         />);
-    expect(spy).toHaveBeenCalledTimes(0);
+    expect(spy).toHaveBeenCalled();
     tmp.validation.noValidateOnMount = false;
 });
 

@@ -39,9 +39,14 @@ class SelectField extends React.PureComponent {
     }
 
     render() {
+        let showInvalidty = true;
+        if (!!this.props.template.validation.noValidateOnMount && !this.props.pristine) {
+            showInvalidty = false;
+        }
+
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                <span>{!this.props.isValid && <span>Invalid field</span>}</span>
+                <span>{!this.props.isValid && showInvalidty && <span>Invalid field</span>}</span>
                 <Select
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
                     isDisabled={this.props.readOnly}

@@ -348,6 +348,16 @@ const formData = {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.onFormChange = this.onFormChange.bind(this);
+    this.state = {
+      isFormValid: null,
+    }
+  }
+
+  onFormChange(mergedData) {
+    this.setState({
+      isFormValid: mergedData.isValid
+    })
   }
 
   render() {
@@ -355,9 +365,17 @@ class App extends Component {
       <div className="App">
         <Form
           theme={AddressLayout}
+          onChange={this.onFormChange}
           // overrideOptions={overrideOptions}
           templates={AddressTemplate}
-          formData={formData} />
+          formData={formData} >
+          <button
+            disabled={this.state.isFormValid !== null
+              && this.state.isFormValid !== true}
+          >
+            Submit
+          </button>
+        </Form>
       </div>
     );
   }

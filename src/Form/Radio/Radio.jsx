@@ -23,6 +23,11 @@ class RadioComponent extends React.PureComponent {
     }
 
     render() {
+        let showInvalidty = true;
+        if (!!this.props.template.validation.noValidateOnMount && !this.props.pristine) {
+            showInvalidty = false;
+        }
+
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
                 <div>

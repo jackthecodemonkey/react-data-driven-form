@@ -9,12 +9,20 @@ const TextField = props => {
         className = '',
         label = '',
         isValid,
+        pristine,
         template,
     } = props;
 
+    const noValidateOnMount = template.validation.noValidateOnMount;
+    let showInvalidty = true;
+
+    if (!!noValidateOnMount && !pristine) {
+        showInvalidty = false;
+    }
+
     const defaultStyle = {
         outline: 'none',
-        border: !isValid ? '1px solid red' : '',
+        border: (!isValid && showInvalidty) ? '1px solid red' : '',
     };
 
     return (

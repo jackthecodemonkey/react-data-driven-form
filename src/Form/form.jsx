@@ -20,11 +20,15 @@ import {
 import events from './event';
 import { CreateElementsFactory } from './LayoutGen';
 import Theme from './LayoutGen/models/Theme';
+import FormDataHandler from './FormDataHandler';
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.fields = null;
+    this.formData = new FormDataHandler(this.props.templates);
+    this.mergedFormData = {};
+    this.fieldConditions = {};
     this.event = events();
     this.applyTheme = CreateElementsFactory(this.props.theme);
     this.state = {
@@ -33,13 +37,21 @@ class Form extends React.Component {
   }
 
   componentWillMount() {
-    this.event.on('onChange', (state, { fieldName }) => {
+    this.event.on('onChange', (state, template) => {
+      this.mergeFormValues(state, template);
     })
     this.initializeFields()
   }
 
   componentWillUnmount() {
     this.event.clear();
+  }
+
+  mergeFormValues(state, { fieldName }) {
+    this.formData.UpdateFieldData(fieldName, state)
+    if (this.formData.MergedData !== null) {
+      this.props.onChange(this.formData.MergedData);
+    }
   }
 
   getFieldComponent(Field, template) {
@@ -113,6 +125,9 @@ class Form extends React.Component {
       <div className="form-container">
         {
           this.fields
+        }
+        {
+          this.props.children
         }
       </div>
     );

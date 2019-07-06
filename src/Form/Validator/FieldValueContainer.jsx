@@ -21,7 +21,7 @@ const FieldValueContainer = (Component) => {
     }
 
     componentWillMount() {
-      if (!this.validation.noValidateOnMount) this.updateState(this.state.value);
+      this.updateState(this.state.value);
     }
 
     initializeValidity(initialValue) {
