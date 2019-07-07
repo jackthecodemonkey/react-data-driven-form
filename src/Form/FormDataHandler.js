@@ -18,6 +18,16 @@ class FormDataHandler {
             .map(fieldName => this.formData[fieldName][property]);
     }
 
+    get DefaultValues() {
+        return this.template
+            .reduce((acc, next) => {
+                if (next.default) {
+                    acc[next.fieldName] = next.default;
+                }
+                return acc;
+            }, {});
+    }
+
     get Value() {
         return Object
             .keys(this.formData)

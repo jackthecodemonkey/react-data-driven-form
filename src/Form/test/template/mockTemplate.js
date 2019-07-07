@@ -110,6 +110,7 @@ const templates = [
     fieldType: 'text',
     fieldName: 'name',
     label: 'Name',
+    default: 'my name',
     referenceFields: [],
     validation: {
       minLength: 3,
@@ -132,6 +133,7 @@ const templates = [
     fieldType: 'text',
     fieldName: 'address',
     label: 'Address',
+    default: 'address 1',
     referenceFields: ['age', 'name'],
     validation: {
       minLength: 3,
@@ -143,6 +145,7 @@ const templates = [
     fieldType: 'select',
     fieldName: 'state',
     label: 'State',
+    default: 'strawberry',
     referenceFields: [],
     options: [
       { value: 'chocolate', label: 'Chocolate' },

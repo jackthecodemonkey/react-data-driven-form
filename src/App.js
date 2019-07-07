@@ -8,18 +8,20 @@ const AddressTemplate = [
     fieldType: 'text',
     fieldName: 'title',
     label: 'Title',
+    default: 'Mr',
     referenceFields: [],
     validation: {
       maxLength: 20,
-      regexp: /^[0-9a-zA-Z]+$/,
+      regexp: /^[a-zA-Z0-9 ]+$/,
     },
   }, {
     fieldType: 'text',
     fieldName: 'address1',
     label: 'Address 1',
+    default: '26 Hawkes Dr',
     referenceFields: [],
     validation: {
-      regexp: /^[0-9a-zA-Z]+$/,
+      regexp: /^[a-zA-Z0-9 ]+$/gm,
       noValidateOnMount: true,
       required: true,
     },
@@ -29,13 +31,14 @@ const AddressTemplate = [
     label: 'Address 2',
     referenceFields: [],
     validation: {
-      regexp: /^[0-9a-zA-Z]+$/,
+      regexp: /^[a-zA-Z0-9 ]+$/gm,
       noValidateOnMount: true,
       required: true,
     },
   }, {
     fieldType: 'radio',
     fieldName: 'mailing',
+    default: 'no',
     label: 'Would you like to get our emails ?',
     referenceFields: [],
     options: [
@@ -49,6 +52,7 @@ const AddressTemplate = [
     fieldType: 'select',
     fieldName: 'requesttype',
     label: 'Request Type',
+    default: 'studentfaul',
     referenceFields: [],
     options: [
       { value: 'studentfaul', label: 'Student Fault' },

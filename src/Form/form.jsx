@@ -27,12 +27,11 @@ class Form extends React.Component {
     super(props);
     this.fields = null;
     this.formData = new FormDataHandler(this.props.templates);
-    this.mergedFormData = {};
-    this.fieldConditions = {};
     this.event = events();
     this.applyTheme = CreateElementsFactory(this.props.theme);
-    this.state = {
-      formData: this.props.formData,
+    this.initialFormData = {
+      ...this.formData.DefaultValues,
+      ...this.props.formData,
     }
   }
 
@@ -61,7 +60,7 @@ class Form extends React.Component {
       referenceValidators={ReferenceValidator(template.referenceFields, this.props.templates)}
       validator={ValidatorSelector(template)}
       template={template}
-      formData={this.props.formData} />
+      formData={this.initialFormData} />
   }
 
   buildComponent(template) {
