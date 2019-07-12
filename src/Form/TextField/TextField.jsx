@@ -29,6 +29,7 @@ const TextField = props => {
         <FieldWrapper shouldUseFragment={template && template.hasTheme}>
             <label htmlFor={label}>{label}</label>
             <input
+                className='text-field'
                 onChange={onChange}
                 value={props.value === null ? '' : props.value}
                 disabled={readOnly}

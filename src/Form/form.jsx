@@ -22,6 +22,9 @@ import { CreateElementsFactory } from './LayoutGen';
 import Theme from './LayoutGen/models/Theme';
 import FormDataHandler from './FormDataHandler';
 
+import '../Form/styles/defaultStyle.scss';
+import '../Form/styles/customStyle.scss';
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -122,12 +125,16 @@ class Form extends React.Component {
   render() {
     return (
       <div className="form-container">
-        {
-          this.fields
-        }
-        {
-          this.props.children
-        }
+        <div>
+          {
+            this.fields
+          }
+        </div>
+        <div>
+          {
+            this.props.children
+          }
+        </div>
       </div>
     );
   }

@@ -46,8 +46,10 @@ class SelectField extends React.PureComponent {
 
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                <span>{!this.props.isValid && showInvalidty && <span>Invalid field</span>}</span>
+                {/* <label>{!this.props.isValid && showInvalidty && <span>Invalid field</span>}</label> */}
+                <div className='label'>{ this.props.label }</div>
                 <Select
+                    className='select-field'
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
                     isDisabled={this.props.readOnly}
                     onChange={this.onChange}

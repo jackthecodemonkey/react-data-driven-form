@@ -30,10 +30,10 @@ class RadioComponent extends React.PureComponent {
 
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                <div>
+                <label>
                     {this.props.label}
-                </div>
-                <RadioGroup onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
+                </label>
+                <RadioGroup className="radio-group-field" onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
                     {this.renderOptions()}
                 </RadioGroup>
             </FieldWrapper>

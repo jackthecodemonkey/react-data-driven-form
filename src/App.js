@@ -3,6 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
 
+/**
+ * Fields to be added
+ * 1. Date time picker
+ * 2. file upload
+ */
+
+/**
+ *  TODO::
+ *  Decide default styles
+ *  When styling fields
+ *  1.Consider to show '* Required' under required fields
+ *  2.Consider to show helper text under fields
+ *  3.Decide default styles applied to each fields
+ */
+
 const AddressTemplate = [
   {
     fieldType: 'text',
@@ -65,6 +80,7 @@ const AddressTemplate = [
     }
   }];
 
+/* Structured layout */
 const AddressLayout = [
   {
     groupId: 'wrapper',
@@ -92,6 +108,30 @@ const AddressLayout = [
       },
     ]
   }
+]
+
+/* unstructured layout (flatten fields) */
+const AddressLayout2 = [
+  {
+    field: 'title',
+    className: 'title',
+  },
+  {
+    field: 'address1',
+    className: 'address1',
+  },
+  {
+    field: 'address2',
+    className: 'address2',
+  },
+  {
+    field: 'requesttype',
+    className: 'requesttype',
+  },
+  {
+    field: 'mailing',
+    className: 'mailing',
+  },
 ]
 
 const layout = [

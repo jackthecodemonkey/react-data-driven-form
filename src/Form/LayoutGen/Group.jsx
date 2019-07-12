@@ -9,7 +9,9 @@ const Group = (group, templates) => {
         subGroup,
     } = group;
     return React.cloneElement(<div></div>, {
-        className,
+        className: className
+            ? `form-group ${className}`
+            : 'form-group',
         style,
         children: [...GetFields(subGroup, templates)]
     });

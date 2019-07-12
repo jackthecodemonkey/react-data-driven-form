@@ -11,7 +11,9 @@ const GetFields = (fields, templates) => {
         const field = fields[i];
         if (field instanceof Group) {
             const nextGroup = React.cloneElement(<React.Fragment></React.Fragment>, {
-                className: field.className,
+                className: field.className
+                    ? `form-group ${field.className}`
+                    : 'form-group',
                 style: field.style,
                 key: makeid(),
                 children: GroupComponent(field, templates)
