@@ -5,7 +5,7 @@ const defaultStyle = {
     outline: 'none',
 };
 
-const TextField = props => {
+const TextArea = props => {
     const {
         readOnly,
         style = {},
@@ -30,16 +30,19 @@ const TextField = props => {
 
     return (
         <FieldWrapper shouldUseFragment={template && template.hasTheme}>
-            <label htmlFor={label}>{label}</label>
-            <input
+            <label htmlFor={label}>
+                {label}
+            </label>
+            <textarea
                 className={finalClass}
                 onChange={onChange}
                 value={props.value === null ? '' : props.value}
                 disabled={readOnly}
                 style={{ ...defaultStyle, ...style }}
-                type="text" />
+            >
+            </textarea>
         </FieldWrapper>
     );
 }
 
-export default TextField;
+export default TextArea;

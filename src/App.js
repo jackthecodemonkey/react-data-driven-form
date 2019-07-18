@@ -11,8 +11,9 @@ import Form from './Form';
 
 /**
  *  TODO::
- *  Decide default styles
  *  When styling fields
+ *  display validation errors
+ *  0.Update models/components to show validation error by context (messages)
  *  1.Consider to show '* Required' under required fields
  *  2.Consider to show helper text under fields
  *  3.Decide default styles applied to each fields
@@ -50,7 +51,21 @@ const AddressTemplate = [
       noValidateOnMount: true,
       required: true,
     },
-  }, {
+  },
+  {
+    fieldType: 'textarea',
+    fieldName: 'description',
+    label: 'Description',
+    default: 'Hello!',
+    referenceFields: [],
+    validation: {
+      maxLength: 50,
+      regexp: /^[a-zA-Z0-9 ]+$/,
+      noValidateOnMount: true,
+      required: true,
+    },
+  },
+  {
     fieldType: 'radio',
     fieldName: 'mailing',
     default: 'no',
@@ -97,6 +112,10 @@ const AddressLayout = [
       {
         field: 'address2',
         className: 'address2',
+      },
+      {
+        field: 'description',
+        className: 'description',
       },
       {
         field: 'requesttype',

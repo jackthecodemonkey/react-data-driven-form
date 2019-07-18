@@ -1,7 +1,7 @@
 class Field {
     constructor(localField = {}) {
         this.field = localField.field || null;
-        this.className = localField.className || null;
+        this.className = localField.className || localField.field || null;
         this.style = localField.style || {};
     }
 

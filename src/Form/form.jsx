@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectField from './Select';
 import { OptionsChangeListener, FetchOptions } from './Common';
-import TextField from './TextField';
+import TextField, { TextArea } from './TextField';
 import Radio from './Radio';
 import Checkbox from './Checkbox';
 import {
@@ -70,8 +70,10 @@ class Form extends React.Component {
     let Field = null;
     switch (template.fieldType) {
       case 'text':
-      case 'textArea':
         Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextField)));
+        break;
+      case 'textarea':
+        Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextArea)));
         break;
       case 'select':
         if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
@@ -98,14 +100,15 @@ class Form extends React.Component {
     const theme = new Theme(this.props.theme);
     const hasTheme = !!this.props.theme;
     this.fields = this.props.templates.map(template => {
-      if (hasTheme) template.hasTheme = true;
+      let fieldTheme = theme.FindField(template.fieldName);
+      if (fieldTheme) template.hasTheme = true;
       let Field = this.buildComponent(template);
       /* If field template includes conditional show/hide, append those fields with the field */
       if (template.conditional) Field = this.applyConditionalField(template, theme, Field);
       theme.AddComponent(template.fieldName, Field);
       return Field;
     })
-    if (hasTheme) this.fields = this.applyTheme(theme.components)
+    if (hasTheme) this.fields = this.applyTheme(theme.components);
   }
 
   applyConditionalField(template, theme, Field) {

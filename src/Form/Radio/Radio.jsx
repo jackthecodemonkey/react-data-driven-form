@@ -10,7 +10,14 @@ class RadioComponent extends React.PureComponent {
 
     renderOptions() {
         return this.props.options.map(option => {
-            return (<label key={option.label}> <Radio disabled={this.props.readOnly} value={option.value} />{option.label}</label>)
+            return (
+                <div className="radio-field">
+                    <Radio disabled={this.props.readOnly} value={option.value} />
+                    <label key={option.label}>
+                        {option.label}
+                    </label>
+                </div>
+            )
         })
     }
 
@@ -27,10 +34,10 @@ class RadioComponent extends React.PureComponent {
         if (!!this.props.template.validation.noValidateOnMount && !this.props.pristine) {
             showInvalidty = false;
         }
-
+        const labelClass = showInvalidty && !this.props.isValid ? 'invalid' : '';
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                <label>
+                <label className={labelClass}>
                     {this.props.label}
                 </label>
                 <RadioGroup className="radio-group-field" onChange={this.handleChange} selectedValue={this.props.value} name="fruit">
