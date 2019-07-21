@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-preset-react-app": "^7.0.0",
     "es6-promise": "^4.2.6",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.11",
@@ -23,6 +24,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "resolutions": {
+    "write-file-atomic": "2.4.1"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -31,7 +35,7 @@
   ],
   "devDependencies": {
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.13.2",
+    "enzyme-adapter-react-16": "^1.14.0",
     "react-test-renderer": "^16.8.6"
   }
 }

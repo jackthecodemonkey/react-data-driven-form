@@ -56,7 +56,6 @@ const AddressTemplate = [
     fieldType: 'textarea',
     fieldName: 'description',
     label: 'Description',
-    default: 'Hello!',
     referenceFields: [],
     validation: {
       maxLength: 50,
@@ -93,6 +92,21 @@ const AddressTemplate = [
       required: true,
       noValidateOnMount: true,
     }
+  }, {
+    fieldType: 'checkbox',
+    fieldName: 'fruits',
+    label: 'Favorite Fruits',
+    referenceFields: ['description'],
+    options: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'pear', label: 'Pear' },
+      { value: 'pineapple', label: 'Pineapple' }
+    ],
+    validation: {
+      required: true,
+      minSelect: 2,
+      noValidateOnMount: true,
+    }
   }];
 
 /* Structured layout */
@@ -120,6 +134,10 @@ const AddressLayout = [
       {
         field: 'requesttype',
         className: 'requesttype',
+      },
+      {
+        field: 'fruits',
+        className: 'fruits',
       },
       {
         field: 'mailing',

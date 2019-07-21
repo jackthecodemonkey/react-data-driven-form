@@ -11,9 +11,9 @@ class RadioComponent extends React.PureComponent {
     renderOptions() {
         return this.props.options.map(option => {
             return (
-                <div className="radio-field">
+                <div key={option.label} className="radio-field">
                     <Radio disabled={this.props.readOnly} value={option.value} />
-                    <label key={option.label}>
+                    <label>
                         {option.label}
                     </label>
                 </div>

@@ -25,27 +25,36 @@ class Checkbox extends React.PureComponent {
     getOptions() {
         return this.props.options.map(option => {
             return (
-                <div key={option.value}>
+                <div className="checkbox-field" key={option.value}>
                     <label>
-                        <input
-                            disabled={this.props.readOnly}
-                            onChange={this.handleClick}
-                            checked={(this.props.value || []).includes(option.value)}
-                            type="checkbox"
-                            name={option.value}
-                            value={option.value} />
                         {option.label}
                     </label>
+                    <input
+                        disabled={this.props.readOnly}
+                        onChange={this.handleClick}
+                        checked={(this.props.value || []).includes(option.value)}
+                        type="checkbox"
+                        name={option.value}
+                        value={option.value} />
                 </div>
             );
         })
     }
 
     render() {
+        let showInvalidty = true;
+        if (!!this.props.template.validation.noValidateOnMount && !this.props.pristine) {
+            showInvalidty = false;
+        }
+        const labelClass = showInvalidty && !this.props.isValid ? 'invalid' : '';
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                {this.getOptions()}
-                {!this.props.isValid && <div>Invalid field</div>}
+                <label className={labelClass}>
+                    {this.props.label}
+                </label>
+                <div className="checkbox-group-field">
+                    {this.getOptions()}
+                </div>
             </FieldWrapper>
         )
     }
