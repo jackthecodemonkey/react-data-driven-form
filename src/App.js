@@ -96,7 +96,7 @@ const AddressTemplate = [
     fieldType: 'checkbox',
     fieldName: 'fruits',
     label: 'Favorite Fruits',
-    referenceFields: ['description'],
+    referenceFields: [],
     options: [
       { value: 'apple', label: 'Apple' },
       { value: 'pear', label: 'Pear' },

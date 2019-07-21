@@ -1,5 +1,11 @@
 import rules from '../Validator/ValidationRules';
 
+const InvalidMessage = Object.freeze({
+    required: 'This field is required',
+    minLength: 'Mininmum length of this field is {}',
+    maxLength: 'Max length of this field is {}',
+})
+
 class StringValidator {
     constructor(validation = {}) {
         this.minLength = validation.minLength || null;

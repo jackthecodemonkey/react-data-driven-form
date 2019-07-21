@@ -52,7 +52,7 @@ class Form extends React.Component {
   mergeFormValues(state, { fieldName }) {
     this.formData.UpdateFieldData(fieldName, state)
     if (this.formData.MergedData !== null) {
-      this.props.onChange(this.formData.MergedData);
+      this.props.onChange && this.props.onChange(this.formData.MergedData);
     }
   }
 

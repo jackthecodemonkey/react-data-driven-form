@@ -98,15 +98,24 @@ const FieldValueContainer = (Component) => {
       const {
         template,
         formData,
+        readOnly,
         ...otherProps
       } = this.props;
+
       const {
         label,
       } = template;
+
+      const localReadOnly = typeof template.readOnly === 'boolean'
+        && template.readOnly
+        ? template.readOnly
+        : readOnly;
+
       return (
         <Component
           template={template}
           label={label}
+          readOnly={localReadOnly}
           value={this.state.value}
           onChange={this.onChange}
           forceResetValue={this.forceResetValue}
