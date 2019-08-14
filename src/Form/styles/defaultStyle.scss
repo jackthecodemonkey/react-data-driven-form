@@ -1,6 +1,7 @@
 $defaultInputBorder: hsl(0,0%,80%);
 $defaultInputBorderHightlight: #2694ff;
 $defaultInputInvalidBorder: #d9534f;
+$defaultInputReadOnly: #f3f3f3;
 
 .form-container {
     max-width: 500px;
@@ -28,13 +29,18 @@ $defaultInputInvalidBorder: #d9534f;
         border: none;
         border: 1px solid $defaultInputBorder;
         padding: 10px 0px 10px 5px;
-        transition: border-color 0.2s;
+        transition: all 0.2s;
+        transition-property: border-color, background-color;
         &:focus {
             border-color: $defaultInputBorderHightlight;
         }
 
         &.invalid {
             border: 1px solid $defaultInputInvalidBorder;
+        }
+
+        &.readOnly {
+            background: $defaultInputReadOnly
         }
     }
 

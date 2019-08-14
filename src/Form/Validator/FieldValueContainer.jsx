@@ -87,6 +87,7 @@ const FieldValueContainer = (Component) => {
     }
 
     forceResetValue(newValue = null) {
+      if (!this.state.pristine) return;
       this.setState({
         value: newValue,
       }, () => {

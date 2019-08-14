@@ -1,11 +1,9 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { select1, textField2, select2, formData } from '../../template/mockTemplate';
+import { textField2, formData } from '../../template/mockTemplate';
 import events from '../../../event';
 import FieldValueContainer from '../../../Validator/FieldValueContainer';
-import SelectValidator from '../../../Select/SelectValidator';
 import StringValidator from '../../../TextField/StringValidator';
-import sinon from 'sinon';
 
 let textField2Copy = { ...textField2 };
 let formDataCopy = { ...formData };
@@ -108,6 +106,7 @@ test('forceResetValue test', (done) => {
         expect(bool).toEqual(true);
         done();
     })
+    newWrapper.setState({ pristine: true });
     newWrapper.instance().forceResetValue('newVal');
 })
 

@@ -35,7 +35,7 @@ const AddressTemplate = [
     fieldName: 'address1',
     label: 'Address 1',
     default: '26 Hawkes Dr',
-    referenceFields: [],
+    referenceFields: ['title'],
     validation: {
       regexp: /^[a-zA-Z0-9 ]+$/gm,
       noValidateOnMount: true,
@@ -56,7 +56,8 @@ const AddressTemplate = [
     fieldType: 'textarea',
     fieldName: 'description',
     label: 'Description',
-    referenceFields: [],
+    referenceFields: ['title', 'address2'],
+    // clearIfReferenceInvalid: true, /* Clear after pristine, means initial defaule value is reserved */
     validation: {
       maxLength: 50,
       regexp: /^[a-zA-Z0-9 ]+$/,
@@ -436,6 +437,7 @@ class App extends Component {
   }
 
   onFormChange(mergedData) {
+    console.log(mergedData);
     this.setState({
       isFormValid: mergedData.isValid
     })
@@ -450,10 +452,7 @@ class App extends Component {
           // overrideOptions={overrideOptions}
           templates={AddressTemplate}
           formData={formData} >
-          <button
-            disabled={this.state.isFormValid !== null
-              && this.state.isFormValid !== true}
-          >
+          <button disabled={this.state.isFormValid !== null && this.state.isFormValid !== true} >
             Submit
           </button>
         </Form>

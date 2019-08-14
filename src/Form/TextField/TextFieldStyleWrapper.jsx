@@ -10,6 +10,7 @@ const TextFieldStyleWrapper = (TextField) => {
         render() {
             const {
                 isValid,
+                readOnly,
                 pristine,
                 template,
                 style = {},
@@ -25,11 +26,13 @@ const TextFieldStyleWrapper = (TextField) => {
 
             const inValidStyle = (!isValid && showInvalidty) ? 'invalid' : '';
 
-            const finalClass = `text-field ${inValidStyle}`;
+            const readOnlyStyle = readOnly ? 'readOnly' : '';
+
+            const finalClass = `text-field ${inValidStyle} ${readOnlyStyle}`;
 
             return (
                 <FieldWrapper shouldUseFragment={template && template.hasTheme}>
-                    <TextField style={{ ...defaultStyle, ...style }} className={finalClass} isValid={isValid} pristine={pristine} template={template} {...others} />
+                    <TextField style={{ ...defaultStyle, ...style }} readOnly={readOnly} className={finalClass} isValid={isValid} pristine={pristine} template={template} {...others} />
                 </FieldWrapper>
             );
         }

@@ -49,7 +49,7 @@ const ReferenceFieldsValidator = (Component) => {
         const validFields = { ...this.state.validFields };
         if ([fieldName] in validFields) validFields[fieldName] = value;
         let areAllReferenceFieldsValid = this.validateReferenceFields(validFields);
-        if (areAllReferenceFieldsValid === false && this.props.template.clearIfReferenceInvalid) this.event.emit('ResetSelectedValue', this.props.template.fieldName);
+        if (areAllReferenceFieldsValid === false && this.props.template.clearIfReferenceInvalid) this.event.emit('ResetSelectedValue', this.props.template.fieldName , null);
         this.setState({
           validFields,
           readOnly: typeof areAllReferenceFieldsValid === 'boolean'
