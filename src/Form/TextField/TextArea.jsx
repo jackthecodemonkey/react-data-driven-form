@@ -1,48 +1,30 @@
 import React from 'react';
-import FieldWrapper from '../Common/FieldWrapper';
-
-const defaultStyle = {
-    outline: 'none',
-};
+import TextFieldStyleWrapper from './TextFieldStyleWrapper';
 
 const TextArea = props => {
     const {
         readOnly,
         style = {},
         onChange,
-        className = '',
+        className,
         label = '',
-        isValid,
-        pristine,
-        template,
     } = props;
 
-    const noValidateOnMount = template.validation.noValidateOnMount;
-    let showInvalidty = true;
-
-    if (!!noValidateOnMount && !pristine) {
-        showInvalidty = false;
-    }
-
-    const inValidStyle = (!isValid && showInvalidty) ? 'invalid' : '';
-
-    const finalClass = `text-field ${inValidStyle}`;
-
     return (
-        <FieldWrapper shouldUseFragment={template && template.hasTheme}>
+        <React.Fragment>
             <label htmlFor={label}>
                 {label}
             </label>
             <textarea
-                className={finalClass}
+                className={className}
                 onChange={onChange}
                 value={props.value === null ? '' : props.value}
                 disabled={readOnly}
-                style={{ ...defaultStyle, ...style }}
+                style={style}
             >
             </textarea>
-        </FieldWrapper>
+        </React.Fragment>
     );
 }
 
-export default TextArea;
+export default TextFieldStyleWrapper(TextArea);
