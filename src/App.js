@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './Form';
+import Form, { Pattern } from './Form';
 
 /**
  * Fields to be added
@@ -28,7 +28,8 @@ const AddressTemplate = [
     referenceFields: [],
     validation: {
       maxLength: 20,
-      regexp: /^[a-zA-Z0-9 ]+$/,
+      pattern: Pattern.Number,
+      noValidateOnMount: true,
     },
   }, {
     fieldType: 'text',
@@ -37,7 +38,7 @@ const AddressTemplate = [
     default: '26 Hawkes Dr',
     referenceFields: ['title'],
     validation: {
-      regexp: /^[a-zA-Z0-9 ]+$/gm,
+      pattern: Pattern.Decimal,
       noValidateOnMount: true,
       required: true,
     },
@@ -47,7 +48,7 @@ const AddressTemplate = [
     label: 'Address 2',
     referenceFields: [],
     validation: {
-      regexp: /^[a-zA-Z0-9 ]+$/gm,
+      pattern: Pattern.Alphanumeric,
       noValidateOnMount: true,
       required: true,
     },
@@ -60,7 +61,8 @@ const AddressTemplate = [
     // clearIfReferenceInvalid: true, /* Clear after pristine, means initial defaule value is reserved */
     validation: {
       maxLength: 50,
-      regexp: /^[a-zA-Z0-9 ]+$/,
+      pattern: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      patternName: 'Slug',
       noValidateOnMount: true,
       required: true,
     },
@@ -267,7 +269,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^[a-zA-Z]+$/,
+      pattern: /^[a-zA-Z]+$/,
       required: true,
     },
   },
@@ -280,7 +282,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^\d*$/,
+      pattern: /^\d*$/,
       required: true,
     }
   },
@@ -292,7 +294,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^\d*$/,
+      pattern: /^\d*$/,
       required: true,
     }
   },
@@ -321,7 +323,7 @@ const templates = [
         validation: {
           minLength: 3,
           maxLength: 10,
-          regexp: /^\d*$/,
+          pattern: /^\d*$/,
           required: true,
         }
       },
@@ -335,7 +337,7 @@ const templates = [
         validation: {
           minLength: 3,
           maxLength: 10,
-          regexp: /^\d*$/,
+          pattern: /^\d*$/,
           required: true,
         }
       }

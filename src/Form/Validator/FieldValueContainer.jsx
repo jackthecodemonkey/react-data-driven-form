@@ -71,7 +71,10 @@ const FieldValueContainer = (Component) => {
         isValid: this.props.validator.validate(value),
       }, () => {
         if (this.props.onChange) this.props.onChange(this.state, e);
-        if (this.props.event) this.props.event.emit('onChange', this.state, this.props.template)
+        if (this.props.event) {
+          this.props.event.emit('onChange', this.state, this.props.template);
+          this.props.event.emit('SendData', this.state, this.props.template, this.props.validator.getInvalidContext());
+        }
       })
     }
 

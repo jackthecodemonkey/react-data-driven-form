@@ -1,15 +1,21 @@
-import rules from '../Validator/ValidationRules';
+import rules from '../Models/validationRule';
+import InvalidFieldContext from '../Models/invalidContext';
 
-class RadioValidator {
-    constructor(validation = {}) {
+class RadioValidator extends InvalidFieldContext {
+    constructor(validation = {}, customInvalidContext = {}) {
+        super(validation, customInvalidContext);
         this.required = validation.required || false;
         this.inValidFields = [];
     }
 
     validate(value) {
         this.inValidFields = [];
-        if (!value && this.required) this.inValidFields.push(rules.required);
+        if (!value && this.required) this.inValidFields.push(this.GetInvalidContext(rules.required));
         return this.inValidFields.length === 0;
+    }
+
+    getInvalidContext() {
+        return this.inValidFields;
     }
 }
 

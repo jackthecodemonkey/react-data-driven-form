@@ -39,8 +39,8 @@ class Form extends React.Component {
   }
 
   componentWillMount() {
-    this.event.on('onChange', (state, template) => {
-      this.mergeFormValues(state, template);
+    this.event.on('SendData', (state, template, invalidContext) => {
+      this.mergeFormValues(state, template, invalidContext);
     })
     this.initializeFields()
   }
@@ -49,8 +49,8 @@ class Form extends React.Component {
     this.event.clear();
   }
 
-  mergeFormValues(state, { fieldName }) {
-    this.formData.UpdateFieldData(fieldName, state)
+  mergeFormValues(state, { fieldName }, invalidContext) {
+    this.formData.UpdateFieldData(fieldName, state, invalidContext)
     if (this.formData.MergedData !== null) {
       this.props.onChange && this.props.onChange(this.formData.MergedData);
     }

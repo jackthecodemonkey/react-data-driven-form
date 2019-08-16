@@ -1,9 +1,8 @@
 const rules = Object.freeze({
     minLength: 'minLength',
     maxLength: 'maxLength',
-    regexp: 'regexp',
+    pattern: 'pattern',
     required: 'required',
-    optionSelected: 'optionSelected',
     minSelect: 'minSelect',
     maxSelect: 'maxSelect',
 })

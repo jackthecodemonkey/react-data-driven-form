@@ -2,10 +2,12 @@ class FormDataHandler {
     constructor(template) {
         this.formData = {};
         this.template = template;
+        this.invalidContext = {};
     }
 
-    UpdateFieldData(fieldName, state) {
+    UpdateFieldData(fieldName, state, invalidContext) {
         this.formData[fieldName] = state;
+        this.invalidContext[fieldName] = invalidContext;
     }
 
     get TotalNumberOfFields() {
@@ -60,6 +62,7 @@ class FormDataHandler {
             pristine: this.Pristine,
             value: this.Value,
             isValid: this.IsValid,
+            invalidContext: this.invalidContext,
         }
     }
 }

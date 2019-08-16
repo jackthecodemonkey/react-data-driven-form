@@ -1,3 +1,5 @@
+import Pattern from '../../Models/patterns';
+
 const textField1 = {
   fieldType: 'text',
   fieldName: 'name',
@@ -6,7 +8,7 @@ const textField1 = {
   validation: {
     minLength: 3,
     maxLength: 10,
-    regexp: /^[a-zA-Z]+$/,
+    pattern: Pattern.Alphanumeric,
     required: true,
   },
 };
@@ -19,7 +21,7 @@ const textField2 = {
   validation: {
     minLength: 3,
     maxLength: 10,
-    regexp: /^\d*$/,
+    pattern: Pattern.Alphanumeric,
     required: true,
   }
 };
@@ -115,7 +117,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^[a-zA-Z]+$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     },
   }, {
@@ -126,7 +128,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^\d*$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     }
   }, {
@@ -138,7 +140,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      regexp: /^\d*$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     }
   }, {
