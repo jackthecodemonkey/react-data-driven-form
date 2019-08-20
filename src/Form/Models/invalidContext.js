@@ -17,7 +17,7 @@ class InvalidFieldContext {
     }
 
     get IsPattenCustom() {
-        return !!this.patternName;
+        return !!this.requiredValidationRules.patternName;
     }
 
     DefaultContext(rule) {
@@ -38,7 +38,7 @@ class InvalidFieldContext {
 
     GetPatternName(pattern) {
         if (this.requiredValidationRules.patternName) return this.requiredValidationRules.patternName;
-        return Object.keys(Pattern).find(localPattern => Pattern[localPattern] === pattern);
+        return Object.keys(Pattern).find(localPattern => Pattern[localPattern].toString() === (pattern && pattern.toString()));
     }
 
     FormatInvalidContext(message, rule, value) {

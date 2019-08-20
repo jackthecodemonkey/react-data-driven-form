@@ -26,6 +26,20 @@ const textField2 = {
   }
 };
 
+const textField3 = {
+  fieldType: 'text',
+  fieldName: 'address',
+  label: 'Address',
+  referenceFields: ['age', 'name'],
+  validation: {
+    minLength: 3,
+    maxLength: 10,
+    pattern: /^[a-zA-Z0-9]*$/,
+    patternName: 'texReg',
+    required: true,
+  }
+};
+
 const select1 = {
   fieldType: 'select',
   fieldName: 'state',
@@ -201,6 +215,7 @@ export {
   templates,
   textField1,
   textField2,
+  textField3,
   select1,
   select2,
   radio1,
