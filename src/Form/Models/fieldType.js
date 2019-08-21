@@ -1,9 +1,9 @@
 const FieldType = Object.freeze({
-    TextField: 'TextField',
-    TextArea: 'TextArea',
-    Checkbox: 'Checkbox',
-    Select: 'Select',
-    Radio: 'Radio',
+    TextField: 'text',
+    TextArea: 'textarea',
+    Checkbox: 'checkbox',
+    Select: 'select',
+    Radio: 'radio',
 });
 
 export default FieldType;
