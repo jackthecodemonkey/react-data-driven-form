@@ -36,6 +36,9 @@ $defaultInputReadOnly: #f3f3f3;
         }
 
         &.invalid {
+            + label {
+                color: $defaultInputInvalidBorder;
+            }
             border: 1px solid $defaultInputInvalidBorder;
         }
 
@@ -59,6 +62,7 @@ $defaultInputReadOnly: #f3f3f3;
         justify-content: center;
         margin-right:10px;
         font-size: 13px;
+        transition: color 0.2s;
     }
 
     .radio-group-field, .checkbox-group-field {
