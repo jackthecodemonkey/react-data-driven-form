@@ -4,6 +4,7 @@ import { OptionsChangeListener, FetchOptions } from './Common';
 import TextField, { TextArea } from './TextField';
 import Radio from './Radio';
 import Checkbox from './Checkbox';
+import FieldType from './Models/fieldType';
 import {
   FieldValueContainer,
   ReferenceFieldsValidator,
@@ -69,24 +70,26 @@ class Form extends React.Component {
   buildComponent(template) {
     let Field = null;
     switch (template.fieldType) {
-      case 'text':
+      case FieldType.TextField:
         Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextField)));
         break;
-      case 'textarea':
+      case FieldType.TextArea:
         Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextArea)));
         break;
-      case 'select':
+      case FieldType.Select:
         if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
           template.url = this.props.overrideOptions[template.fieldName];
         }
         Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(SelectField)))));
         break;
-      case 'radio':
+      case FieldType.Radio:
         Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(Radio)))));
         break;
-      case 'checkbox':
+      case FieldType.Checkbox:
         Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(Checkbox)))));
         break;
+      default:
+        throw new Error(`${template.fieldType} is not available. please select one from FieldType`)
     }
 
     if (template.conditionalListener) Field = ConditionalFieldsListener(Field);

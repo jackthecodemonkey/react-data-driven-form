@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form, { Pattern } from './Form';
+import Form, { Pattern, FieldType } from './Form';
 
 /**
  * Fields to be added
@@ -21,7 +21,7 @@ import Form, { Pattern } from './Form';
 
 const AddressTemplate = [
   {
-    fieldType: 'text',
+    fieldType: FieldType.TextField,
     fieldName: 'title',
     label: 'Title',
     default: 'Mr',
@@ -32,7 +32,7 @@ const AddressTemplate = [
       noValidateOnMount: true,
     },
   }, {
-    fieldType: 'text',
+    fieldType: FieldType.TextField,
     fieldName: 'address1',
     label: 'Address 1',
     default: '26 Hawkes Dr',
@@ -43,7 +43,7 @@ const AddressTemplate = [
       required: true,
     },
   }, {
-    fieldType: 'text',
+    fieldType: FieldType.TextField,
     fieldName: 'address2',
     label: 'Address 2',
     referenceFields: [],
@@ -54,7 +54,7 @@ const AddressTemplate = [
     },
   },
   {
-    fieldType: 'textarea',
+    fieldType: FieldType.TextArea,
     fieldName: 'description',
     label: 'Description',
     referenceFields: ['title', 'address2'],
@@ -68,7 +68,7 @@ const AddressTemplate = [
     },
   },
   {
-    fieldType: 'radio',
+    fieldType: FieldType.Radio,
     fieldName: 'mailing',
     default: 'no',
     label: 'Would you like to get our emails ?',
@@ -81,7 +81,7 @@ const AddressTemplate = [
       required: true,
     }
   }, {
-    fieldType: 'select',
+    fieldType: FieldType.Select,
     fieldName: 'requesttype',
     label: 'Request Type',
     default: 'studentfaul',
@@ -96,7 +96,7 @@ const AddressTemplate = [
       noValidateOnMount: true,
     }
   }, {
-    fieldType: 'checkbox',
+    fieldType: FieldType.Checkbox,
     fieldName: 'fruits',
     label: 'Favorite Fruits',
     referenceFields: [],
