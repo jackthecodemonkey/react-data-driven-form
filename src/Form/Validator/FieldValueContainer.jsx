@@ -17,6 +17,7 @@ const FieldValueContainer = (Component) => {
         isDirty: false,
         isValid: this.initializeValidity(this.initialValue),
         value: this.initialValue,
+        invalidContext: [],
       }
     }
 
@@ -62,18 +63,21 @@ const FieldValueContainer = (Component) => {
     }
 
     updateState(value, e = null, userHasInteracted = false) {
+      const isValid = this.props.validator.validate(value);
+      const invalidContext = this.props.validator.getInvalidContext();
       this.setState({
         pristine: this.state.pristine
           ? true
           : userHasInteracted,
         isDirty: this.checkIfDirty(value, userHasInteracted),
         value,
-        isValid: this.props.validator.validate(value),
+        isValid,
+        invalidContext,
       }, () => {
         if (this.props.onChange) this.props.onChange(this.state, e);
         if (this.props.event) {
           this.props.event.emit('onChange', this.state, this.props.template);
-          this.props.event.emit('SendData', this.state, this.props.template, this.props.validator.getInvalidContext());
+          this.props.event.emit('SendData', this.state, this.props.template, invalidContext);
         }
       })
     }
