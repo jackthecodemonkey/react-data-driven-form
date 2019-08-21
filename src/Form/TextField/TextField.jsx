@@ -7,12 +7,13 @@ const TextField = props => {
         style = {},
         onChange,
         className = '',
+        labelStyle,
         label = '',
     } = props;
  
     return (
         <React.Fragment>
-            <label htmlFor={label}>{label}</label>
+            <label className={labelStyle} htmlFor={label}>{label}</label>
             <input
                 className={className}
                 onChange={onChange}

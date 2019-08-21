@@ -7,12 +7,13 @@ const TextArea = props => {
         style = {},
         onChange,
         className,
+        labelStyle,
         label = '',
     } = props;
 
     return (
         <React.Fragment>
-            <label htmlFor={label}>
+            <label className={labelStyle} htmlFor={label}>
                 {label}
             </label>
             <textarea

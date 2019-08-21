@@ -39,15 +39,20 @@ class SelectField extends React.PureComponent {
     }
 
     render() {
+        let defaultLabelClass = 'label';
         let showInvalidty = true;
         if (!!this.props.template.validation.noValidateOnMount && !this.props.pristine) {
             showInvalidty = false;
         }
 
+        if(!this.props.isValid && showInvalidty) {
+            defaultLabelClass += ' invalid'
+        }
+
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
                 {/* <label>{!this.props.isValid && showInvalidty && <span>Invalid field</span>}</label> */}
-                <div className='label'>{ this.props.label }</div>
+                <label className={defaultLabelClass}>{ this.props.label }</label>
                 <Select
                     className='select-field'
                     isLoading={!this.props.readOnly && this.props.loadingOptions}

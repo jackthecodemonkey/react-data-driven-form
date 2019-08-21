@@ -32,7 +32,7 @@ const TextFieldStyleWrapper = (TextField) => {
 
             return (
                 <FieldWrapper shouldUseFragment={template && template.hasTheme}>
-                    <TextField style={{ ...defaultStyle, ...style }} readOnly={readOnly} className={finalClass} isValid={isValid} pristine={pristine} template={template} {...others} />
+                    <TextField labelStyle={inValidStyle ? inValidStyle : ''} style={{ ...defaultStyle, ...style }} readOnly={readOnly} className={finalClass} isValid={isValid} pristine={pristine} template={template} {...others} />
                 </FieldWrapper>
             );
         }
