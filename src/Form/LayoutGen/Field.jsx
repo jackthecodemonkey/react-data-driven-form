@@ -6,7 +6,7 @@ const Field = (field, templates) => {
             ? `form-field ${field.className}`
             : 'form-field',
         style: field.style,
-        children: templates && templates[field.field],
+        children: templates && React.cloneElement(templates[field.field], { style: field.style }),
         key: field.className,
     });
 }

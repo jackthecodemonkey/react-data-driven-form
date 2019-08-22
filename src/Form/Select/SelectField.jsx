@@ -3,6 +3,15 @@ import Select from 'react-select';
 import makeid from '../RandomStringGen';
 import FieldWrapper from '../Common/FieldWrapper';
 
+const defaultStyles = {
+    control: provided => {
+        return {
+            ...provided,
+            boxShadow: 'none',
+        }
+    },
+}
+
 const getValueObject = (value, options) => options.find(option => option.value === value);
 
 const getValue = (value, options) => {
@@ -45,16 +54,22 @@ class SelectField extends React.PureComponent {
             showInvalidty = false;
         }
 
-        if(!this.props.isValid && showInvalidty) {
+        if (!this.props.isValid && showInvalidty) {
             defaultLabelClass += ' invalid'
+        }
+
+        const styles = {
+            ...defaultStyles,
+            ...this.props.style,
         }
 
         return (
             <FieldWrapper shouldUseFragment={this.props.template && this.props.template.hasTheme}>
-                {/* <label>{!this.props.isValid && showInvalidty && <span>Invalid field</span>}</label> */}
-                <label className={defaultLabelClass}>{ this.props.label }</label>
+                <label className={defaultLabelClass}>{this.props.label}</label>
                 <Select
                     className='select-field'
+                    classNamePrefix='select-field'
+                    styles={styles}
                     isLoading={!this.props.readOnly && this.props.loadingOptions}
                     isDisabled={this.props.readOnly}
                     onChange={this.onChange}
