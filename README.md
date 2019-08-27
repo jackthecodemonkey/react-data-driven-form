@@ -4,7 +4,7 @@
 
 The goal of the component is to fulfil the following requirements
 - Able to use the component to generate form by a template
-- Able to use each field component with validation featrue without using a template
+- Able to use each field component with validation feature without a template
 - Able to replace built-in component with a custum component easily
 
 ## Features
@@ -49,4 +49,15 @@ The goal of the component is to fulfil the following requirements
 
 **The exmple shows how to create templates**
 
+* Global properties ( Can be applied for every field types )
 
+| Property  | Type | Description | Required | Default |
+| ------------------| ---------------- | ----------- | -------- | -------- |
+| fieldType         | String | Type of field | Yes | 
+| fieldName         | String | Field name | Yes |
+| label          | String           | Label | Yes |
+| default          | String         | Default value | No |
+| readOnly          | Boolean         | Ready only field | No | `false` |
+| referenceFields   | Array or String | If specified, this field will get notified on reference fields value change event | No |
+| clearIfReferenceInvalid   | Boolean | If true and reference field(s) invalid, this field value is cleared | No | `false` | 
+| validation   | Object | Field validation related properties | No |
