@@ -5,6 +5,7 @@ import TextField, { TextArea } from './TextField';
 import Radio from './Radio';
 import Checkbox from './Checkbox';
 import FieldType from './Models/fieldType';
+import Template from './Models/template';
 import {
   FieldValueContainer,
   ReferenceFieldsValidator,
@@ -103,12 +104,13 @@ class Form extends React.Component {
     const theme = new Theme(this.props.theme);
     const hasTheme = !!this.props.theme;
     this.fields = this.props.templates.map(template => {
-      let fieldTheme = theme.FindField(template.fieldName);
-      if (fieldTheme) template.hasTheme = true;
-      let Field = this.buildComponent(template);
+      const localTemplate = new Template(template);
+      let fieldTheme = theme.FindField(localTemplate.fieldName);
+      if (fieldTheme) localTemplate.hasTheme = true;
+      let Field = this.buildComponent(localTemplate);
       /* If field template includes conditional show/hide, append those fields with the field */
-      if (template.conditional) Field = this.applyConditionalField(template, theme, Field);
-      theme.AddComponent(template.fieldName, Field);
+      if (localTemplate.conditional) Field = this.applyConditionalField(localTemplate, theme, Field);
+      theme.AddComponent(localTemplate.fieldName, Field);
       return Field;
     })
     if (hasTheme) this.fields = this.applyTheme(theme.components);

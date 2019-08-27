@@ -25,7 +25,6 @@ const AddressTemplate = [
     fieldName: 'title',
     label: 'Title',
     default: 'Mr',
-    referenceFields: [],
     validation: {
       maxLength: 20,
       pattern: Pattern.Number,
@@ -46,7 +45,6 @@ const AddressTemplate = [
     fieldType: FieldType.TextField,
     fieldName: 'address2',
     label: 'Address 2',
-    referenceFields: [],
     validation: {
       pattern: Pattern.Alphanumeric,
       noValidateOnMount: true,
@@ -72,7 +70,6 @@ const AddressTemplate = [
     fieldName: 'mailing',
     default: 'no',
     label: 'Would you like to get our emails ?',
-    referenceFields: [],
     options: [
       { value: 'no', label: 'No' },
       { value: 'yes', label: 'Yes' }
@@ -85,7 +82,6 @@ const AddressTemplate = [
     fieldName: 'requesttype',
     label: 'Request Type',
     default: 'studentfaul',
-    referenceFields: [],
     options: [
       { value: 'studentfaul', label: 'Student Fault' },
       { value: 'facultyfault', label: 'Faculty Fault' },
@@ -99,7 +95,6 @@ const AddressTemplate = [
     fieldType: FieldType.Checkbox,
     fieldName: 'fruits',
     label: 'Favorite Fruits',
-    referenceFields: [],
     options: [
       { value: 'apple', label: 'Apple' },
       { value: 'pear', label: 'Pear' },
