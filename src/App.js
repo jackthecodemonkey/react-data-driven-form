@@ -264,7 +264,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      pattern: /^[a-zA-Z]+$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     },
   },
@@ -277,7 +277,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      pattern: /^\d*$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     }
   },
@@ -289,7 +289,7 @@ const templates = [
     validation: {
       minLength: 3,
       maxLength: 10,
-      pattern: /^\d*$/,
+      pattern: Pattern.Alphanumeric,
       required: true,
     }
   },
@@ -318,7 +318,7 @@ const templates = [
         validation: {
           minLength: 3,
           maxLength: 10,
-          pattern: /^\d*$/,
+          pattern: Pattern.Alphanumeric,
           required: true,
         }
       },
@@ -332,7 +332,7 @@ const templates = [
         validation: {
           minLength: 3,
           maxLength: 10,
-          pattern: /^\d*$/,
+          pattern: Pattern.Alphanumeric,
           required: true,
         }
       }
@@ -353,8 +353,8 @@ const templates = [
     ],
     validation: {
       required: true,
-      // maxSelect: 2,
-      // minSelect: 1,
+      maxSelect: 2,
+      minSelect: 1,
     }
   },
   {
@@ -362,13 +362,13 @@ const templates = [
     fieldName: 'state',
     label: 'State',
     referenceFields: [],
-    // async: true,
-    // url: '/tesAPI/',
-    options: [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ],
+    async: true,
+    url: '/tesAPI/',
+    // options: [
+    //   { value: 'chocolate', label: 'Chocolate' },
+    //   { value: 'strawberry', label: 'Strawberry' },
+    //   { value: 'vanilla', label: 'Vanilla' }
+    // ],
     validation: {
       required: true,
     }
@@ -377,18 +377,12 @@ const templates = [
     fieldType: 'select',
     fieldName: 'suburb',
     label: 'Suburb',
-    referenceFields: ['state', 'address'],
-    options: [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ],
     url: '/tesAPI/{value}/',
     fetchByRefAsync: true,
     refSelector: 'state',
     validation: {
       required: true,
-      // noValidateOnMount: true,
+      noValidateOnMount: true,
     }
   },
   {
@@ -406,14 +400,14 @@ const templates = [
 ]
 
 const formData = {
-  // name: 'Jack',
-  // age: 'Age',
-  // state: 'vanilla',
-  // suburb: 'strawberry',
-  // country: 'chocolate',
-  // fruit: 'apple',
-  // address: 12,
-  // icecream: ['apple', 'watermelon']
+  name: 'Jack',
+  age: 'Age',
+  state: 'vanilla',
+  suburb: 'strawberry',
+  country: 'chocolate',
+  fruit: 'apple',
+  address: 12,
+  icecream: ['apple', 'watermelon']
 }
 
 // const overrideOptions = () => {
@@ -444,11 +438,14 @@ class App extends Component {
     return (
       <div className="App">
         <Form
-          theme={AddressLayout}
+          // theme={AddressLayout}
           onChange={this.onFormChange}
           // overrideOptions={overrideOptions}
-          templates={AddressTemplate}
-          formData={formData} >
+          // templates={AddressTemplate}
+          templates={templates}
+          formData={formData}
+        // formData={formData} 
+        >
           <button disabled={this.state.isFormValid !== null && this.state.isFormValid !== true} >
             Submit
           </button>

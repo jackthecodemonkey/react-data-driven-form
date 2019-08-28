@@ -70,6 +70,9 @@ class Form extends React.Component {
 
   buildComponent(template) {
     let Field = null;
+    if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
+      template.url = this.props.overrideOptions[template.fieldName];
+    }
     switch (template.fieldType) {
       case FieldType.TextField:
         Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextField)));
@@ -78,9 +81,6 @@ class Form extends React.Component {
         Field = ReferenceFieldsValidator(FieldValueContainer(ResetValueNotifier(TextArea)));
         break;
       case FieldType.Select:
-        if (this.props.overrideOptions && this.props.overrideOptions[template.fieldName]) {
-          template.url = this.props.overrideOptions[template.fieldName];
-        }
         Field = ReferenceFieldsValidator(FetchOptions(OptionsChangeListener(FieldValueContainer(ResetValueNotifier(SelectField)))));
         break;
       case FieldType.Radio:
@@ -92,7 +92,6 @@ class Form extends React.Component {
       default:
         throw new Error(`${template.fieldType} is not available. please select one from FieldType`)
     }
-
     if (template.conditionalListener) Field = ConditionalFieldsListener(Field);
 
     return template.conditional
