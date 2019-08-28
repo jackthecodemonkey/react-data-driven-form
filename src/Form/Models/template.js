@@ -1,4 +1,5 @@
 
+import Validation from './validation';
 
 class Template {
     constructor(template = {}) {
@@ -8,7 +9,7 @@ class Template {
         this.default = template.default;
         this.readOnly = template.readOnly || false;
         this.referenceFields = template.referenceFields || [];
-        this.validation = template.validation;
+        this.validation = new Validation(template.validation);
         this.hasTheme = template.hasTheme;  
         this.clearIfReferenceInvalid = template.clearIfReferenceInvalid || false;
         this.options = template.options || null;
