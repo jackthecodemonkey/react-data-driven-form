@@ -18,6 +18,7 @@ The goal of the component is to fulfil the following requirements
     - Not only customizing each field component
     - Also have a control over styling layout the structure!
   - Get notified for form's validity, pristine, is-dirty ,invalidation text and collated form values via event  
+  - Fetch options asynchronously for select, radio and checkbox
   
   **So far, the component supports only the following field types, but I am planning to add more widgets soon**
   
@@ -61,3 +62,14 @@ The goal of the component is to fulfil the following requirements
 | referenceFields   | Array or String | If specified, this field will get notified on reference fields value change event | No |
 | clearIfReferenceInvalid   | Boolean | If true and reference field(s) invalid, this field value is cleared | No | `false` | 
 | validation   | Object | Field validation related properties | No |
+
+* Field specific properties
+
+#### Radio, Select, Checkbox
+| Property  | Type | Description | Required | Default |
+| ------------------| ---------------- | ----------- | -------- | -------- |
+| options | Array of Objects | `value` and `label` pair option | Conditional ( options passed by synchronously, Yes ) | 
+| async | boolean | If we want to pass options asynchronously, this should be true  | Conditional | `False` |
+| url | String | Url for fetching a list of options. If `async` or `fetchByRefAsync` true, this should not be empty. If `fetchByRefAsync` true, then expected url format is something like `/nextOptionAPI/{value}`. the value will be replaced by ref select's selected option value. Details below | Conditional |
+| fetchByRefAsync | Boolean | If options for this dropdown depends on other select's selected option, set to true | Conditional|False|
+
