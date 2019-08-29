@@ -6,8 +6,23 @@ class FormDataHandler {
     }
 
     UpdateFieldData(fieldName, state, invalidFields) {
+        this.ClearConditionalFieldsData(fieldName);
         this.formData[fieldName] = state;
         this.invalidFields[fieldName] = invalidFields;
+    }
+
+    ClearConditionalFieldsData(fieldName) {
+        const field = this.FindField(fieldName);
+        if (field && field.conditional) {
+            field.fields.forEach(localField => {
+                delete this.invalidFields[localField.fieldName];
+                delete this.formData[localField.fieldName];
+            })
+        }
+    }
+
+    FindField(fieldName) {
+        return this.template.find(t => t.fieldName === fieldName);
     }
 
     get TotalNumberOfFields() {

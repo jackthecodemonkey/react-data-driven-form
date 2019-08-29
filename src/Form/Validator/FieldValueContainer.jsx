@@ -58,7 +58,6 @@ const FieldValueContainer = (Component) => {
       } else /* string type */ {
         isDirty = this.initialValue !== this.props.value && this.initialValue !== value;
       }
-
       return isDirty;
     }
 

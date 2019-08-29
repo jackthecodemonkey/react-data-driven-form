@@ -8,24 +8,15 @@ const ConditionalFieldsListener = (Component) => {
             this.onChangeEventKey = makeid();
             this.state = {
                 show: false,
+                value: null,
             }
         }
 
         componentWillMount() {
             this.props.event.on(`onChange:${this.onChangeEventKey}`, (data, template) => {
-                if (template.fieldName === this.props.template.conditionalListener) {
-                    const value = typeof data.value === 'object' ? data.value.value : data.value;
-                    if (value === this.props.template.show) {
-                        this.setState({
-                            show: true,
-                        })
-                    } else {
-                        this.setState({
-                            show: false,
-                        })
-                    }
-
-                }
+                const value = typeof data.value === 'object' ? data.value.value : data.value;
+                this.UpdateStateValue(value, template);
+                this.DisplayComponent(value, template)
             })
         }
 
@@ -33,10 +24,29 @@ const ConditionalFieldsListener = (Component) => {
             this.props.event.off(`onChange:${this.onChangeEventKey}`);
         }
 
+        UpdateStateValue(value, template) {
+            if (this.props.template.conditionalListener
+                && template.fieldName === this.props.template.fieldName) {
+                if (value) {
+                    this.setState({
+                        value,
+                    })
+                }
+            }
+        }
+
+        DisplayComponent(value, template) {
+            if (template.fieldName === this.props.template.conditionalListener) {
+                this.setState({
+                    show: value === this.props.template.show
+                })
+            }
+        }
+
         render() {
             return (
                 <React.Fragment>
-                    {this.state.show && <Component {...this.props} />}
+                    {this.state.show && <Component value={this.state.value} {...this.props} />}
                 </React.Fragment>
             );
         }

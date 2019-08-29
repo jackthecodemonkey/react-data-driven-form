@@ -10,7 +10,6 @@ const TextField = props => {
         labelStyle,
         label = '',
     } = props;
- 
     return (
         <React.Fragment>
             <label className={labelStyle} htmlFor={label}>{label}</label>
