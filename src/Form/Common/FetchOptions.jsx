@@ -38,7 +38,6 @@ const FetchOptions = (Component) => {
     }
 
     fetchOptionsAsync(url, eventTriggerFieldName) {
-      console.log(url);
       /* simulate getting options async */
       /* call api with url given && update options */
       setTimeout(() => {
