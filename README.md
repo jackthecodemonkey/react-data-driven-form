@@ -50,7 +50,7 @@ The goal of the component is to fulfil the following requirements
 | onChange          | Function         | Callback to get notified whenver form fields update | Yes |
 | overrideOptions   | Function         | To dynamically fetch or generate options for select, radio and checkboxes | No |
 
-**The exmple shows how to create templates**
+**Properties of templates prop**
 
 * Global properties ( Can be applied for every field types )
 
@@ -74,4 +74,20 @@ The goal of the component is to fulfil the following requirements
 | async | boolean | If we want to pass options asynchronously, this should be true  | Conditional | `False` |
 | url | String | Url for fetching a list of options. If `async` or `fetchByRefAsync` true, this should not be empty. If `fetchByRefAsync` true, then expected url format is something like `/nextOptionAPI/{value}`. the value will be replaced by ref select's selected option value. Details below | Conditional |
 | fetchByRefAsync | Boolean | If options for this dropdown depends on other select's selected option, set to true | Conditional|False|
+
+
+### Radio ### 
+( Display fields based on selected radio button )
+
+| Property  | Type | Description | Required | Default |
+| ------------------| ---------------- | ----------- | -------- | -------- |
+| conditional | Boolean | Conditionally display child fields | No | 
+| fields | Array of Objects | Array of fields | Yes if `conditional` is true | 
+
+NOTE: Each of child field template object must have the following properties
+
+| Property  | Type | Description | Required | Default |
+| ------------------| ---------------- | ----------- | -------- | -------- |
+| conditionalListener   | String | Name of parent field | Yes If parent field set `conditional` true |
+| show   | String | Value which makes this field shown | Yes If `conditionalListener` is given |
 
