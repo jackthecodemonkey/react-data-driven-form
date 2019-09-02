@@ -91,3 +91,58 @@ NOTE: Each of child field template object must have the following properties
 | conditionalListener   | String | Name of parent field | Yes If parent field set `conditional` true |
 | show   | String | Value which makes this field shown | Yes If `conditionalListener` is given |
 
+**Properties of theme prop**
+
+**Important**
+If you want to override a default theme, a number of layout objects must be equal to a number of objects passed to `Form` component
+If any of object is missing from layout template, the missing template won't be rendered in your form. details below
+
+If your form template is like this
+```
+[
+  {
+    fieldType: FieldType.TextField,
+    fieldName: 'title',
+    label: 'Title',
+  }, {
+    fieldType: FieldType.TextField,
+    fieldName: 'address1',
+    label: 'Address 1',
+  }, {
+    fieldType: FieldType.TextField,
+    fieldName: 'address2',
+    label: 'Address 2',
+  },
+]
+```
+then your layout template must include those three fields
+```
+[
+  {
+    field: 'title',
+    className: 'you name it',
+  },
+  {
+    field: 'address1',
+    className: 'you name it',
+  },
+  {
+    field: 'address2',
+    className: 'you name it',
+  },
+]
+```
+If you use the layout template, each of your field wrapper will have custom class names you pass in,
+
+Layout template supports two types of format
+
+1. Basic <br/>
+The basic layout template format is flattened array of objects like above example.
+The component will render based on how you order your field.
+The example above will render first title, address1 and address2
+
+
+
+
+
+
