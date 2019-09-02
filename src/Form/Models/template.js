@@ -23,7 +23,6 @@ class Template {
         // Field for determining which child field to show
         // eg) Radio - 1.A (Orange field), 2.B (Grape field) 
         this.conditional = template.conditional;
-        this.defaultField = template.defaultField;
         this.fields = Array.isArray(template.fields)
             ? template.fields.map(field => new Template(field))
             : null;

@@ -66,7 +66,6 @@ class Form extends React.Component {
       validator={ValidatorSelector(template)}
       template={template}
       formData={this.initialFormData} />
-     
   }
 
   buildComponent(template) {

@@ -16,11 +16,19 @@ $defaultInputReadOnly: #f3f3f3;
     transition: color 0.2s;
 }
 
+.conditional-field {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+}
+
 .form-field {
     width: 100%;
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+
+    &.conditional { margin-bottom: 0px; }
 
     .text-field, .textarea-field {
         border-radius: 3px;

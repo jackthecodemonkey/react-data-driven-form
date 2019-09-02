@@ -255,6 +255,49 @@ const layout = [
   }
 ]
 
+const templateLayout = [
+  {
+    field: 'name',
+    className: 'nameClass',
+  },
+  {
+    field: 'age',
+    className: 'age',
+  },
+  {
+    field: 'address',
+    className: 'address',
+  },
+  {
+    field: 'fruit',
+    className: 'fruit',
+  },
+  {
+    field: 'billingAddress',
+    className: 'billingAddress conditional',
+  },
+  {
+    field: 'shippingAddress',
+    className: 'shippingAddress conditional',
+  },
+  {
+    field: 'icecream',
+    className: 'icecream',
+  },
+  {
+    field: 'state',
+    className: 'state',
+  },
+  {
+    field: 'suburb',
+    className: 'suburb',
+  },
+  {
+    field: 'country',
+    className: 'country',
+  },
+]
+
 const templates = [
   {
     fieldType: 'text',
@@ -301,7 +344,6 @@ const templates = [
     conditional: true,
     // async: true,
     // url: '/tesAPI/',
-    defaultField: 'billingAddress',
     options: [
       { value: 'apple', label: 'Apple' },
       { value: 'orange', label: 'Orange' },
@@ -364,11 +406,6 @@ const templates = [
     referenceFields: [],
     async: true,
     url: '/tesAPI/',
-    // options: [
-    //   { value: 'chocolate', label: 'Chocolate' },
-    //   { value: 'strawberry', label: 'Strawberry' },
-    //   { value: 'vanilla', label: 'Vanilla' }
-    // ],
     validation: {
       required: true,
     }
@@ -439,6 +476,7 @@ class App extends Component {
       <div className="App">
         <Form
           // theme={AddressLayout}
+          theme={templateLayout}
           onChange={this.onFormChange}
           // overrideOptions={overrideOptions}
           // templates={AddressTemplate}

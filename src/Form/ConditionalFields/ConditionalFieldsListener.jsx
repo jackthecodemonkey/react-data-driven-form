@@ -46,7 +46,7 @@ const ConditionalFieldsListener = (Component) => {
         render() {
             return (
                 <React.Fragment>
-                    {this.state.show && <Component value={this.state.value} {...this.props} />}
+                    {this.state.show && <div className="conditional-field"><Component value={this.state.value} {...this.props} /></div>}
                 </React.Fragment>
             );
         }
