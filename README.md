@@ -76,7 +76,7 @@ The goal of the component is to fulfil the following requirements
 | fetchByRefAsync | Boolean | If options for this dropdown depends on other select's selected option, set to true | Conditional|False|
 
 
-### Radio
+#### Radio
 ( Display fields based on selected radio button )
 
 | Property  | Type | Description | Required | Default |
