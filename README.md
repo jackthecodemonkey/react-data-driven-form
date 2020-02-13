@@ -1,9 +1,9 @@
 **Lightweight, highly configurable and easy to use data driven form renderer for React**
 
-**Note the project is still experimental and under active development. many more new features will be added in! 🌈**
+**Note the project is still experimental and under development 🌈**
 
-The goal of the component is to fulfil the following requirements
-- Able to use the component to generate form by a template
+The goal of the project is to fulfil the following requirements
+- Able to use the component to generate form by a template object
 - Able to use each field component with validation feature without a template
 - Able to replace built-in component with a custum component easily
 
@@ -13,7 +13,7 @@ The goal of the component is to fulfil the following requirements
     - Default regexp patterns for input text and textarea
     - Support custom pattern validation
     - Built in validation rules for other field types such as checkbox, radio and select
-  - Conditionally disable fields based on reference fields validity. ( Fields can listen each other 👀 )
+  - Conditionally disable fields based on reference fields' validation
   - Support separate template data for customizing layout for the form section 
     - Not only customizing each field component
     - Also have a control over styling layout the structure!
